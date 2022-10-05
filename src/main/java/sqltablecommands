@@ -1,0 +1,37 @@
+CREATE TABLE "UserTable" (
+	"username"	TEXT,
+	"password"	TEXT,
+	"email"	TEXT,
+	"firstName"	TEXT,
+	"lastName"	TEXT,
+	"gender"	TEXT,
+	"personID"	TEXT
+);
+
+CREATE TABLE "PersonTable" (
+	"personID"	TEXT,
+	"associatedUsername"	TEXT,
+	"firstName"	TEXT,
+	"lastName"	TEXT,
+	"gender"	TEXT,
+	"fatherID"	TEXT,
+	"motherID"	TEXT,
+	"spouseID"	TEXT
+);
+
+CREATE TABLE "EventTable" (
+	"eventID"	TEXT,
+	"associatedUsername"	TEXT,
+	"personID"	TEXT,
+	"latitude"	INTEGER,
+	"longitude"	INTEGER,
+	"country"	TEXT,
+	"city"	TEXT,
+	"eventType"	TEXT,
+	"year"	INTEGER
+);
+
+CREATE TABLE "AuthTokenTable" (
+	"authtoken"	TEXT,
+	"username"	TEXT
+);
