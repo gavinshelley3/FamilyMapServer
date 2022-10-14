@@ -12,6 +12,11 @@ public class PersonDao {
         this.conn = conn;
     }
 
+    /**
+     * Inserts a new person into the database
+     * @param person the person to be inserted
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public void insert(Person person) throws DataAccessException {
         String sql = "INSERT INTO Persons (personID, associatedUsername, firstName, lastName, gender, fatherID, motherID, spouseID) " +
                 "VALUES(?,?,?,?,?,?,?,?)";
@@ -31,6 +36,12 @@ public class PersonDao {
         }
     }
 
+    /**
+     * Finds a person in the database
+     * @param personID the personID of the person to be found
+     * @return the person with the given personID
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public Person find(String personID) throws DataAccessException {
         Person person;
         ResultSet rs = null;
@@ -51,6 +62,10 @@ public class PersonDao {
         }
     }
 
+    /**
+     * Deletes all persons from the database
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public void clear() throws DataAccessException {
         try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM Persons")) {
             stmt.executeUpdate();

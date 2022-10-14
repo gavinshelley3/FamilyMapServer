@@ -10,6 +10,8 @@ public class Database {
 
     // Whenever we want to make a change to our database we will have to open a connection and use
     // Statements created by that connection to initiate transactions
+
+    // This method opens a connection to the database
     public Connection openConnection() throws DataAccessException {
         try {
             // The Structure for this Connection is driver:language:path

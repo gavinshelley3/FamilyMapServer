@@ -15,6 +15,11 @@ public class UserDao {
         this.conn = conn;
     }
 
+    /**
+     * Inserts a new user into the database
+     * @param user the user to be inserted
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public void insert(User user) throws DataAccessException {
         String sql = "INSERT INTO Users (username, password, email, firstName, lastName, gender, personID) " +
                 "VALUES(?,?,?,?,?,?,?)";
@@ -33,6 +38,12 @@ public class UserDao {
         }
     }
 
+    /**
+     * Finds a user in the database
+     * @param username the username of the user to be found
+     * @return the user with the given username
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public User find(String username) throws DataAccessException {
         User user;
         ResultSet rs = null;
@@ -53,6 +64,10 @@ public class UserDao {
         }
     }
 
+    /**
+     * Clears all users from the database
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public void clear() throws DataAccessException {
         try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM Users")) {
             stmt.executeUpdate();

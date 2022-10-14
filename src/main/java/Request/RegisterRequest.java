@@ -1,9 +1,27 @@
 package Request;
 
+import DataAccess.DataAccessException;
+import DataAccess.UserDao;
+import Model.Person;
+import Model.User;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class RegisterRequest {
-    private String userName;
-    private String password;
-    private String email;
-    private String firstName;
-    private String lastName;
+    private User user;
+
+    public RegisterRequest() {}
+    public RegisterRequest(User user) {
+        this.user = user;
+    }
+
+    public String register(User user) {
+        return "Register";
+    }
+
+
+
+
 }

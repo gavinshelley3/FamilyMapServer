@@ -12,6 +12,11 @@ public class AuthTokenDao {
         this.conn = conn;
     }
 
+    /**
+     * Inserts a new authToken into the database
+     * @param authToken the authToken to be inserted
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public void insert(AuthToken authToken) throws DataAccessException {
         String sql = "INSERT INTO AuthTokens (authtoken, username) " +
                 "VALUES(?,?)";
@@ -25,6 +30,12 @@ public class AuthTokenDao {
         }
     }
 
+    /**
+     * Finds a authToken in the database
+     * @param authtoken the authtoken of the authToken to be found
+     * @return the authToken with the given authtoken
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public AuthToken find(String authtoken) throws DataAccessException {
         AuthToken authToken;
         ResultSet rs = null;
@@ -44,6 +55,10 @@ public class AuthTokenDao {
         }
     }
 
+    /**
+     * Deletes all authtokens from the database
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public void clear() throws DataAccessException {
         try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM AuthTokens")) {
             stmt.executeUpdate();

@@ -14,6 +14,11 @@ public class EventDAO {
         this.conn = conn;
     }
 
+    /**
+     * Inserts a new event into the database
+     * @param event the event to be inserted
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public void insert(Event event) throws DataAccessException {
         //We can structure our string to be similar to a sql command, but if we insert question
         //marks we can change them later with help from the statement
@@ -40,6 +45,12 @@ public class EventDAO {
         }
     }
 
+    /**
+     * Finds an event in the database
+     * @param eventID the eventID of the event to be found
+     * @return the event with the given eventID
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public Event find(String eventID) throws DataAccessException {
         Event event;
         ResultSet rs;
@@ -63,6 +74,10 @@ public class EventDAO {
 
     }
 
+    /**
+     * Deletes all events from the database
+     * @throws DataAccessException if an error occurs while accessing the database
+     */
     public void clear() throws DataAccessException {
         String sql = "DELETE FROM Events";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
