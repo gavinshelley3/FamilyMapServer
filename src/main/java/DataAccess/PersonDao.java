@@ -18,7 +18,8 @@ public class PersonDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void insert(Person person) throws DataAccessException {
-        String sql = "INSERT INTO Persons (personID, associatedUsername, firstName, lastName, gender, fatherID, motherID, spouseID) " +
+        String sql = "INSERT INTO PersonTable (personID, associatedUsername, firstName, lastName, gender, fatherID, " +
+                "motherID, spouseID) " +
                 "VALUES(?,?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, person.getPersonID());
@@ -43,9 +44,12 @@ public class PersonDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public Person find(String personID) throws DataAccessException {
+        if (personID == null) {
+            throw new DataAccessException("PersonID cannot be null");
+        }
         Person person;
         ResultSet rs = null;
-        String sql = "SELECT * FROM Persons WHERE personID = ?;";
+        String sql = "SELECT * FROM PersonTable WHERE personID = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, personID);
             rs = stmt.executeQuery();
@@ -67,11 +71,11 @@ public class PersonDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void clear() throws DataAccessException {
-        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM Persons")) {
+        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PersonTable")) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException("SQL Error encountered while clearing Persons");
+            throw new DataAccessException("SQL Error encountered while clearing PersonTable");
         }
     }
 }

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class UserDao {
 
@@ -21,10 +22,16 @@ public class UserDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void insert(User user) throws DataAccessException {
-        String sql = "INSERT INTO Users (username, password, email, firstName, lastName, gender, personID) " +
+        if (user == null) {
+            throw new DataAccessException("User cannot be null");
+        }
+        if (Objects.equals(user, find(user.getUsername()))) {
+            throw new DataAccessException("User already exists");
+        }
+        String sql = "INSERT INTO UserTable (username, password, email, firstName, lastName, gender, personID) " +
                 "VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, user.getUserName());
+            stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getEmail());
             stmt.setString(4, user.getFirstName());
@@ -45,9 +52,12 @@ public class UserDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public User find(String username) throws DataAccessException {
+        if (username == null) {
+            throw new DataAccessException("Username cannot be null");
+        }
         User user;
         ResultSet rs = null;
-        String sql = "SELECT * FROM Users WHERE username = ?;";
+        String sql = "SELECT * FROM UserTable WHERE username = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
             rs = stmt.executeQuery();
@@ -69,11 +79,11 @@ public class UserDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void clear() throws DataAccessException {
-        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM Users")) {
+        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM UserTable")) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException("SQL Error encountered while clearing Users");
+            throw new DataAccessException("SQL Error encountered while clearing UserTable");
         }
     }
 }

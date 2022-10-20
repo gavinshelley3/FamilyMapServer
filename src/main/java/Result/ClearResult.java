@@ -9,6 +9,11 @@ public class ClearResult {
         this.success = success;
     }
 
+    public void clear() {
+        message = null;
+        success = false;
+    }
+
     public String getMessage() {
         return message;
     }

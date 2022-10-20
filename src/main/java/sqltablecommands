@@ -1,15 +1,15 @@
 CREATE TABLE "UserTable" (
-	"username"	TEXT,
+	"username"	TEXT UNIQUE,
 	"password"	TEXT,
 	"email"	TEXT,
 	"firstName"	TEXT,
 	"lastName"	TEXT,
 	"gender"	TEXT,
-	"personID"	TEXT
+	"personID"	TEXT UNIQUE
 );
 
 CREATE TABLE "PersonTable" (
-	"personID"	TEXT,
+	"personID"	TEXT UNIQUE,
 	"associatedUsername"	TEXT,
 	"firstName"	TEXT,
 	"lastName"	TEXT,
@@ -20,11 +20,11 @@ CREATE TABLE "PersonTable" (
 );
 
 CREATE TABLE "EventTable" (
-	"eventID"	TEXT,
+	"eventID"	TEXT UNIQUE,
 	"associatedUsername"	TEXT,
 	"personID"	TEXT,
-	"latitude"	INTEGER,
-	"longitude"	INTEGER,
+	"latitude"	REAL,
+	"longitude"	REAL,
 	"country"	TEXT,
 	"city"	TEXT,
 	"eventType"	TEXT,
@@ -32,6 +32,6 @@ CREATE TABLE "EventTable" (
 );
 
 CREATE TABLE "AuthTokenTable" (
-	"authtoken"	TEXT,
-	"username"	TEXT
+	"authtoken"	TEXT UNIQUE,
+	"username"	TEXT UNIQUE
 );

@@ -1,15 +1,15 @@
 package Result;
 
-public class FillResult {
+public class LoadResult {
     private String message;
     private boolean success;
 
-    public FillResult(String message, boolean success) {
+    public LoadResult(String message, boolean success) {
         this.message = message;
         this.success = success;
     }
 
-    public void fill() {
+    public void load() {
         message = null;
         success = false;
     }

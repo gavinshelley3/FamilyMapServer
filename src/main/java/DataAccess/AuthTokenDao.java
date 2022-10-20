@@ -18,7 +18,7 @@ public class AuthTokenDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void insert(AuthToken authToken) throws DataAccessException {
-        String sql = "INSERT INTO AuthTokens (authtoken, username) " +
+        String sql = "INSERT INTO AuthTokenTable (authtoken, username) " +
                 "VALUES(?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, authToken.getAuthtoken());
@@ -37,9 +37,12 @@ public class AuthTokenDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public AuthToken find(String authtoken) throws DataAccessException {
+        if (authtoken == null) {
+            throw new DataAccessException("authtoken cannot be null");
+        }
         AuthToken authToken;
         ResultSet rs = null;
-        String sql = "SELECT * FROM AuthTokens WHERE authtoken = ?;";
+        String sql = "SELECT * FROM AuthTokenTable WHERE authtoken = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, authtoken);
             rs = stmt.executeQuery();
@@ -60,11 +63,11 @@ public class AuthTokenDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void clear() throws DataAccessException {
-        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM AuthTokens")) {
+        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM AuthTokenTable")) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccessException("SQL Error encountered while clearing AuthTokens");
+            throw new DataAccessException("SQL Error encountered while clearing AuthTokenTable");
         }
     }
 }

@@ -3,6 +3,7 @@ package Request;
 public class LoginRequest {
     private String userName;
     private String password;
+    private LoginRequest request;
 
 
     public LoginRequest() {}
@@ -11,7 +12,10 @@ public class LoginRequest {
         this.password = password;
     }
 
-    public String login(String userName, String password) {
-        return "personID";
+    public LoginRequest login(String username, String password) {
+        LoginRequest request = new LoginRequest();
+        request.userName = username;
+        request.password = password;
+        return request;
     }
 }

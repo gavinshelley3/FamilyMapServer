@@ -4,16 +4,28 @@ import Request.LoginRequest;
 import Result.LoginResult;
 
 public class LoginService {
+    //Logs the user in
+    //Returns an authtoken
+
     /**
      * Logs in a user
      * @param request
-     * @return LoginResult
+     * @return authToken
      */
-    public LoginResult login(LoginRequest request) {
+
+    private String authToken;
+    private String message;
+    private Boolean success;
+
+    public LoginService() {
+
+    }
+
+    public String login(LoginRequest request) {
         // Check if username and password match
         // If so, create new auth token
         // Return success
-        return null;
+        return authToken;
     }
 
 }
