@@ -3,7 +3,7 @@ package Result;
 public class LoadResult {
     private String message;
     private boolean success;
-
+    public LoadResult() {}
     public LoadResult(String message, boolean success) {
         this.message = message;
         this.success = success;

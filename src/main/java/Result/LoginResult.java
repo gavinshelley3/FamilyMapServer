@@ -4,15 +4,14 @@ import Model.User;
 
 public class LoginResult {
     private String authToken;
-    private String userName;
+    private String username;
     private String personID;
     private boolean success;
     private String message;
-    private LoginResult result;
     public LoginResult() {}
-    public LoginResult(String authToken, String userName, String personID, boolean success, String message) {
+    public LoginResult(String authToken, String username, String personID, boolean success, String message) {
         this.authToken = authToken;
-        this.userName = userName;
+        this.username = username;
         this.personID = personID;
         this.success = success;
         this.message = message;
@@ -21,7 +20,7 @@ public class LoginResult {
     public LoginResult login(User user, String authToken) {
         LoginResult result = new LoginResult();
         result.authToken = authToken;
-        result.userName = user.getUsername();
+        result.username = user.getUsername();
         result.personID = user.getPersonID();
         result.success = true;
         return result;
@@ -36,11 +35,11 @@ public class LoginResult {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getPersonID() {

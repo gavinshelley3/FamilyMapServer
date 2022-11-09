@@ -1,20 +1,24 @@
 package Request;
 
 public class FillRequest {
-    private String userName;
+    private String username;
     private int generations;
 
-    public FillRequest(String userName, int generations) {
-        this.userName = userName;
+    public FillRequest(String username, int generations) {
+        this.username = username;
         this.generations = generations;
     }
 
-    public String getUserName() {
-        return userName;
+    public FillRequest(String username) {
+
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getGenerations() {

@@ -1,27 +1,27 @@
 package Model;
 
 public class Event {
-    private String eventID;
-    private String associatedUsername;
+    private String eventType;
     private String personID;
+    private String city;
+    private String country;
     private float latitude;
     private float longitude;
-    private String country;
-    private String city;
-    private String eventType;
     private int year;
+    private String eventID;
+    private String associatedUsername;
     public Event() {}
-    public Event(String eventID, String associatedUsername, String personID, float latitude, float longitude, String country,
-                 String city, String eventType, int year) {
-        this.eventID = eventID;
-        this.associatedUsername = associatedUsername;
+    public Event(String eventType, String personID, String city, String country, float latitude, float longitude,
+                 int year, String eventID, String associatedUsername) {
+        this.eventType = eventType;
         this.personID = personID;
+        this.city = city;
+        this.country = country;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.country = country;
-        this.city = city;
-        this.eventType = eventType;
         this.year = year;
+        this.eventID = eventID;
+        this.associatedUsername = associatedUsername;
     }
 
     public String getEventID() {

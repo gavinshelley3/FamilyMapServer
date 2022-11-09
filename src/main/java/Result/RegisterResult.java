@@ -5,7 +5,7 @@ import Request.RegisterRequest;
 
 public class RegisterResult {
     private String authToken;
-    private String userName;
+    private String username;
     private String personID;
     private boolean success;
     private String message;
@@ -14,9 +14,9 @@ public class RegisterResult {
     public RegisterResult() {
 
     }
-    public RegisterResult(String authToken, String userName, String personID, boolean success, String message) {
+    public RegisterResult(String authToken, String username, String personID, boolean success, String message) {
         this.authToken = authToken;
-        this.userName = userName;
+        this.username = username;
         this.personID = personID;
         this.success = success;
         this.message = message;
@@ -25,7 +25,7 @@ public class RegisterResult {
     public RegisterResult register(User user, String authToken) {
         RegisterResult result = new RegisterResult();
         result.authToken = authToken;
-        result.userName = user.getUsername();
+        result.username = user.getUsername();
         result.personID = user.getPersonID();
         result.success = true;
         return result;
@@ -39,12 +39,12 @@ public class RegisterResult {
         this.authToken = authToken;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPersonID() {

@@ -1,7 +1,7 @@
 package JUnit;
 
 import DataAccess.Database;
-import DataAccess.EventDAO;
+import DataAccess.EventDao;
 import Model.Event;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,16 +9,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EventDAOTest {
+class EventDaoTest {
     private Database db;
     private Event event;
-    private EventDAO eventDAO;
+    private EventDao eventDAO;
 
     @BeforeEach
     void setUp() throws Exception {
         db = new Database();
-        event = new Event("eventID", "username", "personID", 0, 0, "country", "city", "eventType", 0);
-        eventDAO = new EventDAO(db.getConnection());
+        event = new Event("eventType", "personID", "city", "country", 0, 0, 0, "eventID",
+                "associatedUsername");
+        eventDAO = new EventDao(db.getConnection());
         eventDAO.clear();
     }
 
@@ -33,15 +34,15 @@ class EventDAOTest {
             eventDAO.insert(event);
             Event compareTest = eventDAO.find(event.getEventID());
             assertNotNull(compareTest);
-            assertEquals(event.getEventID(), compareTest.getEventID());
-            assertEquals(event.getAssociatedUsername(), compareTest.getAssociatedUsername());
+            assertEquals(event.getEventType(), compareTest.getEventType());
             assertEquals(event.getPersonID(), compareTest.getPersonID());
+            assertEquals(event.getCity(), compareTest.getCity());
+            assertEquals(event.getCountry(), compareTest.getCountry());
             assertEquals(event.getLatitude(), compareTest.getLatitude());
             assertEquals(event.getLongitude(), compareTest.getLongitude());
-            assertEquals(event.getCountry(), compareTest.getCountry());
-            assertEquals(event.getCity(), compareTest.getCity());
-            assertEquals(event.getEventType(), compareTest.getEventType());
             assertEquals(event.getYear(), compareTest.getYear());
+            assertEquals(event.getEventID(), compareTest.getEventID());
+            assertEquals(event.getAssociatedUsername(), compareTest.getAssociatedUsername());
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -60,15 +61,15 @@ class EventDAOTest {
             eventDAO.insert(event);
             Event compareTest = eventDAO.find(event.getEventID());
             assertNotNull(compareTest);
-            assertEquals(event.getEventID(), compareTest.getEventID());
-            assertEquals(event.getAssociatedUsername(), compareTest.getAssociatedUsername());
+            assertEquals(event.getEventType(), compareTest.getEventType());
             assertEquals(event.getPersonID(), compareTest.getPersonID());
+            assertEquals(event.getCity(), compareTest.getCity());
+            assertEquals(event.getCountry(), compareTest.getCountry());
             assertEquals(event.getLatitude(), compareTest.getLatitude());
             assertEquals(event.getLongitude(), compareTest.getLongitude());
-            assertEquals(event.getCountry(), compareTest.getCountry());
-            assertEquals(event.getCity(), compareTest.getCity());
-            assertEquals(event.getEventType(), compareTest.getEventType());
             assertEquals(event.getYear(), compareTest.getYear());
+            assertEquals(event.getEventID(), compareTest.getEventID());
+            assertEquals(event.getAssociatedUsername(), compareTest.getAssociatedUsername());
         } catch (Exception e) {
             fail(e.getMessage());
         }

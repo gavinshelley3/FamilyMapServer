@@ -1,8 +1,19 @@
 package Service;
 
+import DataAccess.*;
+import Model.AuthToken;
+import Model.Event;
+import Model.Person;
+import Model.User;
+import Request.LoadRequest;
+import Request.RegisterRequest;
+import Result.LoadResult;
+import Result.RegisterResult;
+
 public class RegisterService {
     //Creates a new user account (user row in the database)
-    //Generates 4 generations of ancestor data for the new user (just like the /fill endpoint if called with a generations value of 4 and this new user’s username as parameters)
+    //Generates 4 generations of ancestor data for the new user (just like the /fill endpoint if called with a
+    // generations value of 4 and this new user’s username as parameters)
     //Logs the user in
     //Returns an authtoken
 
@@ -14,8 +25,79 @@ public class RegisterService {
 
     }
 
-    public String register() {
-        return authToken;
+    public RegisterResult register(RegisterRequest request) {
+        RegisterResult result = new RegisterResult();
+        Database db = new Database();
+        try {
+            db.openConnection();
+            UserDao userDao = new UserDao(db.getConnection());
+            PersonDao personDao = new PersonDao(db.getConnection());
+            EventDao eventDao = new EventDao(db.getConnection());
+            AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());
+            User user = new User(request.getUsername(), request.getPassword(), request.getEmail(),
+                    request.getFirstName(), request.getLastName(), request.getGender(), request.generatePersonID());
+            result.setAuthToken(request.generateAuthToken());
+            if (userDao.find(request.getUsername()) == null) {
+                userDao.insert(user);
+                Person person = new Person(request.generatePersonID(), request.getUsername(), request.getFirstName(),
+                        request.getLastName(), request.getGender(), null, null, null);
+                personDao.insert(person);
+//                Event event = new Event(request.generateEventID(), request.getUsername(), person.getPersonID(),
+//                        person.getFirstName(), person.getLastName(), person.getGender(), person.getPersonID(), 0, 0, "Birth");
+//                int generations = 4;
+//
+//                eventDao.insert(request.generateBirthEvent(person.getPersonID()));
+//                eventDao.insert(request.generateDeathEvent(person.getPersonID()));
+//                eventDao.insert(request.generateMarriageEvent(person.getPersonID()));
+//                eventDao.insert(request.generateBaptismEvent(person.getPersonID()));
+                AuthToken authToken = new AuthToken(request.generateAuthToken(), request.getUsername());
+                authTokenDao.insert(authToken);
+                db.closeConnection(true);
+                result.setSuccess(true);
+                result.setMessage("Successfully added user to the database.");
+                result.setUsername(request.getUsername());
+                result.setPersonID(request.generatePersonID());
+            } else {
+                db.closeConnection(false);
+                result.setSuccess(false);
+                result.setMessage("Error: Username already exists.");
+            }
+        }
+        catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+
+        return result;
+    }
+
+    public LoadResult load(LoadRequest request) {
+        LoadResult result = new LoadResult();
+        Database db = new Database();
+        try {
+            db.openConnection();
+            UserDao userDao = new UserDao(db.getConnection());
+            PersonDao personDao = new PersonDao(db.getConnection());
+            EventDao eventDao = new EventDao(db.getConnection());
+            for (User user : request.getUsers()) {
+                userDao.insert(user);
+            }
+            for (Person person : request.getPersons()) {
+                personDao.insert(person);
+            }
+            for (Event event : request.getEvents()) {
+                eventDao.insert(event);
+            }
+            db.closeConnection(true);
+            result.setMessage("Successfully added " + request.getUsers().length + " users, " + request.getPersons().length + " persons, and " + request.getEvents().length + " events to the database.");
+            result.setSuccess(true);
+        } catch (DataAccessException e) {
+            db.closeConnection(false);
+            e.printStackTrace();
+            result.setMessage("Error: " + e.getMessage());
+            result.setSuccess(false);
+        }
+        return result;
     }
 
 }

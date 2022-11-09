@@ -14,15 +14,15 @@ public class AuthTokenDao {
 
     /**
      * Inserts a new authToken into the database
-     * @param authToken the authToken to be inserted
+     * @param authtoken the authToken to be inserted
      * @throws DataAccessException if an error occurs while accessing the database
      */
-    public void insert(AuthToken authToken) throws DataAccessException {
+    public void insert(AuthToken authtoken) throws DataAccessException {
         String sql = "INSERT INTO AuthTokenTable (authtoken, username) " +
                 "VALUES(?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, authToken.getAuthtoken());
-            stmt.setString(2, authToken.getUsername());
+            stmt.setString(1, authtoken.getAuthtoken());
+            stmt.setString(2, authtoken.getUsername());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

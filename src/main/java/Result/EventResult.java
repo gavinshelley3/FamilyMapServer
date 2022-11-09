@@ -14,44 +14,42 @@ public class EventResult {
     private int year;
     private String message;
     private boolean success;
-    private EventResult result;
+    private Event[] data;
     public EventResult() {
 
     }
-    public EventResult(String associatedUsername, String eventID, String personID, double latitude, double longitude,
-                       String country, String city, String eventType, int year, String message, boolean success) {
-        this.associatedUsername = associatedUsername;
-        this.eventID = eventID;
-        this.personID = personID;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.country = country;
-        this.city = city;
-        this.eventType = eventType;
-        this.year = year;
+    public EventResult(Event event, String message, boolean success){
+        this.associatedUsername = event.getAssociatedUsername();
+        this.eventID = event.getEventID();
+        this.personID = event.getPersonID();
+        this.latitude = event.getLatitude();
+        this.longitude = event.getLongitude();
+        this.country = event.getCountry();
+        this.city = event.getCity();
+        this.eventType = event.getEventType();
+        this.year = event.getYear();
         this.message = message;
         this.success = success;
     }
 
-    public EventResult event(Event event) {
-        EventResult result = new EventResult();
-        result.associatedUsername = event.getAssociatedUsername();
-        result.eventID = event.getEventID();
-        result.personID = event.getPersonID();
-        result.latitude = event.getLatitude();
-        result.longitude = event.getLongitude();
-        result.country = event.getCountry();
-        result.city = event.getCity();
-        result.eventType = event.getEventType();
-        result.year = event.getYear();
-        result.message = null;
-        result.success = true;
-        return result;
+    public EventResult(Event[] data, String message, boolean success) {
+        this.data = data;
+        this.message = message;
+        this.success = success;
     }
 
-    public Event[] events() {
+    public EventResult(String message, boolean success) {
+        this.message = message;
+        this.success = success;
+    }
+
+    public Event[] getData() {
         Event[] events = new Event[0];
         return events;
+    }
+
+    public void setData(Event[] data) {
+        this.data = data;
     }
 
     public String getMessage() {
@@ -68,5 +66,41 @@ public class EventResult {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public void setAssociatedUsername(String associatedUsername) {
+        this.associatedUsername = associatedUsername;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setEventID(String eventID) {
+        this.eventID = eventID; 
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setPersonID(String personID) {
+        this.personID = personID;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }

@@ -25,9 +25,6 @@ public class UserDao {
         if (user == null) {
             throw new DataAccessException("User cannot be null");
         }
-        if (Objects.equals(user, find(user.getUsername()))) {
-            throw new DataAccessException("User already exists");
-        }
         String sql = "INSERT INTO UserTable (username, password, email, firstName, lastName, gender, personID) " +
                 "VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

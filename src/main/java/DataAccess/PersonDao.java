@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
+
 public class PersonDao {
     private final Connection conn;
     public PersonDao(Connection conn) {
@@ -18,24 +20,35 @@ public class PersonDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void insert(Person person) throws DataAccessException {
-        String sql = "INSERT INTO PersonTable (personID, associatedUsername, firstName, lastName, gender, fatherID, " +
-                "motherID, spouseID) " +
-                "VALUES(?,?,?,?,?,?,?,?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, person.getPersonID());
-            stmt.setString(2, person.getAssociatedUsername());
-            stmt.setString(3, person.getFirstName());
-            stmt.setString(4, person.getLastName());
-            stmt.setString(5, person.getGender());
-            stmt.setString(6, person.getFatherID());
-            stmt.setString(7, person.getMotherID());
-            stmt.setString(8, person.getSpouseID());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccessException("Error encountered while inserting into the database");
+        if (person == null) {
+            throw new DataAccessException("Person cannot be null");
         }
-    }
+        if (find(person.getPersonID()) != null) {
+            throw new DataAccessException("Person already exists");
+        }
+//        if (find(person.getAssociatedUsername()) != null) {
+//            throw new DataAccessException("Person already exists");
+//        }
+        ResultSet rs = null;
+        String sql = "INSERT INTO PersonTable (firstName, lastName, gender, personID, spouseID, fatherID, " +
+                        "motherID, associatedUsername) " +
+                        "VALUES(?,?,?,?,?,?,?,?)";
+                try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                    statement.setString(1, person.getFirstName());
+                    statement.setString(2, person.getLastName());
+                    statement.setString(3, person.getGender());
+                    statement.setString(4, person.getPersonID());
+                    statement.setString(5, person.getSpouseID());
+                    statement.setString(6, person.getFatherID());
+                    statement.setString(7, person.getMotherID());
+                    statement.setString(8, person.getAssociatedUsername());
+                    statement.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    throw new DataAccessException("Error encountered while inserting into the database");
+                }
+            }
+
 
     /**
      * Finds a person in the database
@@ -47,6 +60,7 @@ public class PersonDao {
         if (personID == null) {
             throw new DataAccessException("PersonID cannot be null");
         }
+
         Person person;
         ResultSet rs = null;
         String sql = "SELECT * FROM PersonTable WHERE personID = ?;";

@@ -1,21 +1,36 @@
 package Request;
 
 public class LoginRequest {
-    private String userName;
+    private String username;
     private String password;
-    private LoginRequest request;
 
 
     public LoginRequest() {}
-    public LoginRequest(String userName, String password) {
-        this.userName = userName;
+    public LoginRequest(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
     public LoginRequest login(String username, String password) {
         LoginRequest request = new LoginRequest();
-        request.userName = username;
+        request.username = username;
         request.password = password;
         return request;
+    }
+
+    public String getUserName() {
+        return username;
+    }
+
+    public void setUserName(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
