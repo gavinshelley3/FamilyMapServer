@@ -21,7 +21,6 @@ public class FillHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        boolean success = false;
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
                 if (exchange.getRequestURI().toString().contains("/fill/")) {
@@ -32,14 +31,13 @@ public class FillHandler implements HttpHandler {
                         String generations = urlArray[3];
                         FillRequest request = new FillRequest(username, Integer.parseInt(generations));
                         FillService service = new FillService();
-                        FillResult result = service.fillGen(request);
+                        FillResult result = service.fillGenerations(request);
 
                         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
                         OutputStream respBody = exchange.getResponseBody();
                         String gsonString = gson.toJson(result);
                         writeString(gsonString,respBody);
                         respBody.close();
-                        success = true;
                     }
                     else {
                         FillRequest request = new FillRequest(username);
@@ -51,14 +49,18 @@ public class FillHandler implements HttpHandler {
                         String gsonString = gson.toJson(result);
                         writeString(gsonString,respBody);
                         respBody.close();
-                        success = true;
                     }
                 }
             }
+            else {
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                exchange.getResponseBody().close();
+            }
         }
-        catch(Exception e) {
-            exchange.sendResponseHeaders((HttpURLConnection.HTTP_SERVER_ERROR), 0);
+        catch (Exception e) {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();
+            System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -1,13 +1,7 @@
 package Request;
 
-import DataAccess.DataAccessException;
-import DataAccess.UserDao;
-import Model.Person;
 import Model.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class RegisterRequest {
     private String username;
@@ -88,12 +82,4 @@ public class RegisterRequest {
         return personID;
     }
 
-    public String generateAuthToken() {
-        String authToken = "";
-        for (int i = 0; i < 8; i++) {
-            int random = (int) (Math.random() * 10);
-            authToken += random;
-        }
-        return authToken;
-    }
 }

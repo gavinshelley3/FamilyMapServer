@@ -12,11 +12,6 @@ public class FillResult {
         this.success = success;
     }
 
-    public void fill() {
-        message = null;
-        success = false;
-    }
-
     public String getMessage() {
         return message;
     }

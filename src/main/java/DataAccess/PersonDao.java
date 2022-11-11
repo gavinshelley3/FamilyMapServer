@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class PersonDao {
@@ -30,24 +31,24 @@ public class PersonDao {
 //            throw new DataAccessException("Person already exists");
 //        }
         ResultSet rs = null;
-        String sql = "INSERT INTO PersonTable (firstName, lastName, gender, personID, spouseID, fatherID, " +
-                        "motherID, associatedUsername) " +
+        String sql = "INSERT INTO PersonTable (firstName, lastName, gender, personID, fatherID, motherID, " +
+                        "spouseID, associatedUsername) " +
                         "VALUES(?,?,?,?,?,?,?,?)";
-                try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                    statement.setString(1, person.getFirstName());
-                    statement.setString(2, person.getLastName());
-                    statement.setString(3, person.getGender());
-                    statement.setString(4, person.getPersonID());
-                    statement.setString(5, person.getSpouseID());
-                    statement.setString(6, person.getFatherID());
-                    statement.setString(7, person.getMotherID());
-                    statement.setString(8, person.getAssociatedUsername());
-                    statement.executeUpdate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    throw new DataAccessException("Error encountered while inserting into the database");
-                }
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                statement.setString(1, person.getFirstName());
+                statement.setString(2, person.getLastName());
+                statement.setString(3, person.getGender());
+                statement.setString(4, person.getPersonID());
+                statement.setString(5, person.getFatherID());
+                statement.setString(6, person.getMotherID());
+                statement.setString(7, person.getSpouseID());
+                statement.setString(8, person.getAssociatedUsername());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new DataAccessException("Error encountered while inserting into the database");
             }
+    }
 
 
     /**
@@ -68,8 +69,9 @@ public class PersonDao {
             stmt.setString(1, personID);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                person = new Person(rs.getString("personID"), rs.getString("associatedUsername"), rs.getString("firstName"),
-                        rs.getString("lastName"), rs.getString("gender"), rs.getString("fatherID"), rs.getString("motherID"), rs.getString("spouseID"));
+                person = new Person(rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                        rs.getString("personID"), rs.getString("fatherID"), rs.getString("motherID"), rs.getString(
+                        "spouseID"), rs.getString("associatedUsername"));
                 return person;
             } else {
                 return null;
@@ -78,6 +80,35 @@ public class PersonDao {
             e.printStackTrace();
             throw new DataAccessException("Error encountered while finding person");
         }
+    }
+
+    public Person[] findAll(String associatedUsername) throws DataAccessException {
+        if (associatedUsername == null || associatedUsername.equals("")) {
+            throw new DataAccessException("associatedUsername is null");
+        }
+        Person[] personArray;
+        ArrayList<Person> persons = new ArrayList<>();
+        String sql = "SELECT * FROM PersonTable WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, associatedUsername);
+            ResultSet rs;
+            rs = stmt.executeQuery();
+            Person person;
+            while (rs.next()) {
+                person = new Person(rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"),
+                        rs.getString("personID"), rs.getString("fatherID"), rs.getString("motherID"), rs.getString(
+                                "spouseID"), rs.getString("associatedUsername"));
+                persons.add(person);//add person to array
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding person");
+        }
+        personArray = persons.toArray(new Person[persons.size()]);
+        if(personArray.length == 0){
+            return null;
+        }
+        return personArray;
     }
 
     /**
@@ -90,6 +121,48 @@ public class PersonDao {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("SQL Error encountered while clearing PersonTable");
+        }
+    }
+
+    public void delete(String personID) throws DataAccessException {
+        if (personID == null || personID.equals("")) {
+            throw new DataAccessException("personID is null");
+        }
+        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PersonTable WHERE personID = ?")) {
+            if(find(personID) == null){
+                throw new DataAccessException("Person does not exist");
+            }
+            stmt.setString(1, personID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("SQL Error encountered while clearing PersonTable");
+        }
+    }
+
+
+    public void deleteAll(String username) throws DataAccessException {
+        if (username == null || username.equals("")) {
+            throw new DataAccessException("username is null");
+        }
+        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PersonTable WHERE associatedUsername = ?")) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("SQL Error encountered while clearing PersonTable");
+        }
+    }
+
+    public void insertSpouseID(String spouseID, String personID) throws DataAccessException {
+        String sql = "UPDATE PersonTable SET spouseID = ? WHERE personID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, spouseID);
+            stmt.setString(2, personID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while inserting spouseID into the database");
         }
     }
 }

@@ -3,42 +3,42 @@ package Result;
 import Model.User;
 
 public class LoginResult {
-    private String authToken;
+    private String authtoken;
     private String username;
     private String personID;
     private boolean success;
     private String message;
     public LoginResult() {}
-    public LoginResult(String authToken, String username, String personID, boolean success, String message) {
-        this.authToken = authToken;
+    public LoginResult(String authtoken, String username, String personID, boolean success, String message) {
+        this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
         this.success = success;
         this.message = message;
     }
 
-    public LoginResult login(User user, String authToken) {
+    public LoginResult login(User user, String authtoken) {
         LoginResult result = new LoginResult();
-        result.authToken = authToken;
+        result.authtoken = authtoken;
         result.username = user.getUsername();
         result.personID = user.getPersonID();
         result.success = true;
         return result;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

@@ -35,15 +35,15 @@ public class FileHandler implements HttpHandler {
                 Headers headers = exchange.getResponseHeaders();
                 headers.set("Content-Type", "text/html");
                 OutputStreamWriter writer = new OutputStreamWriter(respBody);
-                writer.write("<html><head><title>Error 404: File Not Found</title></head><body><h1>Error 404: File Not Found</h1></body></html>");
-                writer.flush();
-                writer.close();
+                file = new File("web/HTML/404.html");
+                Files.copy(file.toPath(), respBody);
                 respBody.close();
             }
         }
         catch (IOException e) {
-            exchange.sendResponseHeaders(500, 0);
+            exchange.sendResponseHeaders((HttpURLConnection.HTTP_SERVER_ERROR), 0);
             exchange.getResponseBody().close();
+            System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }

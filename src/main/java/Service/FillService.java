@@ -1,9 +1,6 @@
 package Service;
 
-import DataAccess.DataAccessException;
-import DataAccess.Database;
-import DataAccess.EventDao;
-import DataAccess.UserDao;
+import DataAccess.*;
 import Model.User;
 import Request.FillRequest;
 import Result.FillResult;
@@ -29,7 +26,7 @@ public class FillService {
     public FillService() {
 
     }
-    public FillResult fill(FillRequest request) {
+    public FillResult fill(FillRequest request) throws DataAccessException {
         Database db = new Database();
         int generations = 4;
 
@@ -56,13 +53,55 @@ public class FillService {
         }
     }
 
-    public FillResult fillGen(FillRequest request) {
-        FillResult fillResult = new FillResult();
-        return fillResult;
+    public FillResult fillGenerations(FillRequest request) throws DataAccessException {
+        if (request.getGenerations() < 0) {
+            throw new DataAccessException("Generations must be a positive integer");
+        }
+
+        Database db = new Database();
+        try {
+            db.openConnection();
+            Connection conn = db.getConnection();
+            UserDao userDao = new UserDao(conn);
+            User user = userDao.find(request.getUsername());
+
+            if (user == null) {
+                throw new DataAccessException("User not found");
+            }
+
+            clear(request, conn);
+            FamilyTreeGenerator familyTreeGenerator = new FamilyTreeGenerator();
+            familyTreeGenerator.generateFamilyTree(request.getUsername(), user.getGender(), request.getGenerations(), user, conn);
+            FillResult result = new FillResult("Successfully added " + familyTreeGenerator.getPeopleCount() + " " +
+                    "persons and " + familyTreeGenerator.getEventCount() + " events to the database.", true);
+            db.closeConnection(true);
+            return result;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            FillResult result = new FillResult("Error: " + e.getMessage(), false);
+            db.closeConnection(false);
+            return result;
+        }
     }
 
     public void clear(FillRequest request, Connection conn) throws DataAccessException, SQLException {
+        try{
+            UserDao userDao = new UserDao(conn);
+            PersonDao personDao = new PersonDao(conn);
+            EventDao eventDao = new EventDao(conn);
+            AuthTokenDao authTokenDao = new AuthTokenDao(conn);
 
+            personDao.deleteAll(request.getUsername());
+            eventDao.delete(request.getUsername());
+            authTokenDao.clear();
+
+            conn.commit();
+        }
+        catch (DataAccessException e) {
+            conn.rollback();
+            e.printStackTrace();
+        }
     }
 
 }

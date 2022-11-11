@@ -33,7 +33,7 @@ public class ClearHandler implements HttpHandler {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream resBody = exchange.getResponseBody();
                 String json = gson.toJson(result);
-                writeString(json, resBody);
+                StringHandler.writeString(json, resBody);
                 resBody.close();
                 success = true;
             }
@@ -48,20 +48,6 @@ public class ClearHandler implements HttpHandler {
             exchange.getResponseBody().close();
             System.out.println("Error");
             e.printStackTrace();
-        }
-    }
-
-    private void writeString(String respData, OutputStream respBody) throws IOException {
-        OutputStreamWriter sw = new OutputStreamWriter(respBody);
-        try {
-            sw.write(respData);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            sw.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

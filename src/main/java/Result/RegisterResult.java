@@ -1,10 +1,11 @@
 package Result;
 
 import Model.User;
-import Request.RegisterRequest;
+
+import java.util.UUID;
 
 public class RegisterResult {
-    private String authToken;
+    private String authtoken;
     private String username;
     private String personID;
     private boolean success;
@@ -14,29 +15,33 @@ public class RegisterResult {
     public RegisterResult() {
 
     }
-    public RegisterResult(String authToken, String username, String personID, boolean success, String message) {
-        this.authToken = authToken;
+    public RegisterResult(String authtoken, String username, String personID, boolean success, String message) {
+        this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
         this.success = success;
         this.message = message;
     }
 
-    public RegisterResult register(User user, String authToken) {
+    public RegisterResult register(User user, String authtoken) {
         RegisterResult result = new RegisterResult();
-        result.authToken = authToken;
+        result.authtoken = authtoken;
         result.username = user.getUsername();
         result.personID = user.getPersonID();
         result.success = true;
         return result;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
+    }
+
+    public String generateAuthtoken() {
+        return UUID.randomUUID().toString();
     }
 
     public String getUsername() {

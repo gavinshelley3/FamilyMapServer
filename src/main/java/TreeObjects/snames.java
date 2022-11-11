@@ -11,7 +11,7 @@ public class snames {
         this.data = data;
     }
 
-    public String getRandmoSname() {
+    public String getRandomSname() {
         int random = (int) (Math.random() * data.length);
         String sname = data[random];
         return sname;

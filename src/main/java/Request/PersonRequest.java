@@ -2,11 +2,11 @@ package Request;
 
 public class PersonRequest {
     private String personID;
-    private String authToken;
+    private String authtoken;
 
-    public PersonRequest(String personID, String authToken) {
+    public PersonRequest(String personID, String authtoken) {
         this.personID = personID;
-        this.authToken = authToken;
+        this.authtoken = authtoken;
     }
 
     public String getPersonID() {
@@ -17,11 +17,11 @@ public class PersonRequest {
         this.personID = personID;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
     }
 }

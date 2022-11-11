@@ -2,11 +2,11 @@ package Request;
 
 public class EventRequest {
     private String eventID;
-    private String authToken;
+    private String authtoken;
 
-    public EventRequest(String eventID, String authToken) {
+    public EventRequest(String authtoken, String eventID) {
         this.eventID = eventID;
-        this.authToken = authToken;
+        this.authtoken = authtoken;
     }
 
     public String getEventID() {
@@ -17,11 +17,11 @@ public class EventRequest {
         this.eventID = eventID;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getAuthtoken() {
+        return authtoken;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
     }
 }

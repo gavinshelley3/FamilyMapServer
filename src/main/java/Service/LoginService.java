@@ -22,7 +22,7 @@ public class LoginService {
     // If so, create new auth token
     // Return success
 
-    private String authToken;
+    private String authtoken;
     private String message;
     private Boolean success;
 
@@ -34,39 +34,36 @@ public class LoginService {
         LoginResult result = new LoginResult();
         Database db = new Database();
         UUID uuid = UUID.randomUUID();
-        String authTokenString = uuid.toString();
-        AuthToken authToken = new AuthToken(authTokenString, request.getUserName());
+        String authtokenString = uuid.toString();
+        AuthToken authtoken = new AuthToken(authtokenString, request.getUsername());
 
         try{
             db.openConnection();
             UserDao userDao = new UserDao(db.getConnection());
             AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());
-            if (userDao.find(request.getUserName()) != null) {
-                if (userDao.find(request.getUserName()).getPassword().equals(request.getPassword())) {
-                    authTokenDao.insert(authToken);
-                    db.closeConnection(true);
-                    result.setAuthToken(authTokenString);
+            if (userDao.find(request.getUsername()) != null) {
+                if (userDao.find(request.getUsername()).getPassword().equals(request.getPassword())) {
+                    authTokenDao.insert(authtoken);
+                    result.setAuthtoken(authtokenString);
                     result.setSuccess(true);
                     result.setMessage("Successfully logged in.");
-                    result.setUserName(request.getUserName());
+                    result.setUsername(request.getUsername());
+                    result.setPersonID(userDao.find(request.getUsername()).getPersonID());
+                    db.closeConnection(true);
                 } else {
-                    db.closeConnection(false);
                     result.setSuccess(false);
                     result.setMessage("Error: Incorrect password.");
+                    db.closeConnection(false);
                 }
             } else {
-                db.closeConnection(false);
                 result.setSuccess(false);
                 result.setMessage("Error: User does not exist.");
+                db.closeConnection(false);
             }
         } catch (Exception e) {
             result.setSuccess(false);
             result.setMessage("Error: " + e.getMessage());
-            try {
-                db.closeConnection(false);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            db.closeConnection(false);
         }
         return result;
     }

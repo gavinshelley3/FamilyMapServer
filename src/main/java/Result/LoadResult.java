@@ -9,11 +9,6 @@ public class LoadResult {
         this.success = success;
     }
 
-    public void load() {
-        message = null;
-        success = false;
-    }
-
     public String getMessage() {
         return message;
     }

@@ -18,6 +18,7 @@ public class AuthTokenDao {
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void insert(AuthToken authtoken) throws DataAccessException {
+        clear();
         String sql = "INSERT INTO AuthTokenTable (authtoken, username) " +
                 "VALUES(?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

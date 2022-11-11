@@ -19,7 +19,6 @@ public class RegisterHandler implements HttpHandler {
     Gson gson = new Gson();
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        boolean success = false;
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
                 InputStream reqBody = exchange.getRequestBody();
@@ -30,26 +29,21 @@ public class RegisterHandler implements HttpHandler {
                 RegisterService service = new RegisterService();
                 RegisterResult result = service.register(request);
 
-                if (result.getAuthToken() == null) {
+                if (result.getAuthtoken() == null) {
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-                    OutputStream respBody = exchange.getResponseBody();
-                    String respData = gson.toJson(result);
-                    writeString(respData, respBody);
-                    respBody.close();
-                    success = true;
                 } else {
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                    OutputStream respBody = exchange.getResponseBody();
-                    String respData = gson.toJson(result);
-                    writeString(respData, respBody);
-                    respBody.close();
-                    success = true;
                 }
+                OutputStream respBody = exchange.getResponseBody();
+                String respData = gson.toJson(result);
+                writeString(respData, respBody);
+                respBody.close();
             }
         }
         catch (IOException e) {
             exchange.sendResponseHeaders((HttpURLConnection.HTTP_SERVER_ERROR), 0);
             exchange.getResponseBody().close();
+            System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }

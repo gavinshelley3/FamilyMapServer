@@ -10,7 +10,7 @@ public class FillRequest {
     }
 
     public FillRequest(String username) {
-
+        this.username = username;
     }
 
     public String getUsername() {

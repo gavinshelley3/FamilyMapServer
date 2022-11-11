@@ -3,6 +3,9 @@ package Handler;
 import java.io.*;
 
 public class StringHandler {
+    public StringHandler() {
+
+    }
     public static String readString(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         InputStreamReader sr = new InputStreamReader(is);
@@ -19,4 +22,5 @@ public class StringHandler {
         sw.write(str);
         sw.flush();
     }
+
 }

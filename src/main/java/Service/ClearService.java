@@ -4,9 +4,10 @@ import DataAccess.*;
 import Request.ClearRequest;
 import Result.ClearResult;
 
+import java.sql.Connection;
+
 public class ClearService {
-    //Deletes ALL data from the database, including user,
-    // authtoken, person, and event data
+    //Deletes ALL data from the database, including user, authtoken, person, and event data
 
 
     public ClearService() {
@@ -18,12 +19,15 @@ public class ClearService {
         ClearResult clearResult = new ClearResult();
         try {
             db.openConnection();
-            UserDao userDao = new UserDao(db.getConnection());
-            PersonDao personDao = new PersonDao(db.getConnection());
-            EventDao eventDao = new EventDao(db.getConnection());
+            Connection conn = db.getConnection();
+            UserDao userDao = new UserDao(conn);
+            PersonDao personDao = new PersonDao(conn);
+            EventDao eventDao = new EventDao(conn);
+            AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             userDao.clear();
             personDao.clear();
             eventDao.clear();
+            authTokenDao.clear();
             db.closeConnection(true);
             clearResult.setMessage("Clear succeeded.");
             clearResult.setSuccess(true);
