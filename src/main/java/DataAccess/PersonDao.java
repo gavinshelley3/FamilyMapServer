@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class PersonDao {
     private final Connection conn;
@@ -27,10 +26,6 @@ public class PersonDao {
         if (find(person.getPersonID()) != null) {
             throw new DataAccessException("Person already exists");
         }
-//        if (find(person.getAssociatedUsername()) != null) {
-//            throw new DataAccessException("Person already exists");
-//        }
-        ResultSet rs = null;
         String sql = "INSERT INTO PersonTable (firstName, lastName, gender, personID, fatherID, motherID, " +
                         "spouseID, associatedUsername) " +
                         "VALUES(?,?,?,?,?,?,?,?)";
@@ -63,7 +58,7 @@ public class PersonDao {
         }
 
         Person person;
-        ResultSet rs = null;
+        ResultSet rs;
         String sql = "SELECT * FROM PersonTable WHERE personID = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, personID);
@@ -104,7 +99,7 @@ public class PersonDao {
             e.printStackTrace();
             throw new DataAccessException("Error encountered while finding person");
         }
-        personArray = persons.toArray(new Person[persons.size()]);
+        personArray = persons.toArray(new Person[0]);
         if(personArray.length == 0){
             return null;
         }
@@ -117,22 +112,6 @@ public class PersonDao {
      */
     public void clear() throws DataAccessException {
         try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PersonTable")) {
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccessException("SQL Error encountered while clearing PersonTable");
-        }
-    }
-
-    public void delete(String personID) throws DataAccessException {
-        if (personID == null || personID.equals("")) {
-            throw new DataAccessException("personID is null");
-        }
-        try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PersonTable WHERE personID = ?")) {
-            if(find(personID) == null){
-                throw new DataAccessException("Person does not exist");
-            }
-            stmt.setString(1, personID);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

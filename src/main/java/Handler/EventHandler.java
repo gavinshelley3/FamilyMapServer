@@ -15,11 +15,10 @@ public class EventHandler implements HttpHandler {
     Gson gson = new Gson();
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        boolean success = false;
         String authtoken = null;
 
         try {
-            if (exchange.getRequestMethod().toLowerCase().equals("get")) {
+            if (exchange.getRequestMethod().equalsIgnoreCase("get")) {
                 if (exchange.getRequestHeaders().containsKey("Authorization")) {
                     authtoken = exchange.getRequestHeaders().getFirst("Authorization");
                 }
@@ -57,7 +56,6 @@ public class EventHandler implements HttpHandler {
                     StringHandler.writeString(gsonString, respBody);
                     respBody.close();
                 }
-                success = true;
             }
         }
         catch (Exception e){

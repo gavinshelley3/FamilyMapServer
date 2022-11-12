@@ -13,7 +13,6 @@ public class fnames {
 
     public String getRandomName() {
         int random = (int) (Math.random() * data.length);
-        String name = data[random];
-        return name;
+        return data[random];
     }
 }

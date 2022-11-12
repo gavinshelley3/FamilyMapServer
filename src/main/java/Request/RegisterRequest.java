@@ -77,7 +77,7 @@ public class RegisterRequest {
     }
 
     public String generatePersonID() {
-        String personID = "";
+        String personID;
         personID = firstName + "_" + lastName;
         return personID;
     }

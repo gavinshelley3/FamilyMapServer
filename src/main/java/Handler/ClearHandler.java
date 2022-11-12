@@ -5,26 +5,23 @@ import Request.ClearRequest;
 import Result.ClearResult;
 import Service.ClearService;
 import com.google.gson.Gson;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
 public class ClearHandler implements HttpHandler {
     public ClearHandler() {}
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         boolean success = false;
         try {
-            if (exchange.getRequestMethod().toLowerCase().equals("post")) {
+            if (exchange.getRequestMethod().equalsIgnoreCase("post")) {
 
                 ClearRequest request = new ClearRequest();
                 ClearService service = new ClearService();

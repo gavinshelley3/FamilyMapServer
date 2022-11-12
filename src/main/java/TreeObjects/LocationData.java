@@ -13,7 +13,6 @@ public class LocationData {
 
     public Location getRandomLocation() {
         int random = (int) (Math.random() * data.length);
-        Location location = data[random];
-        return location;
+        return data[random];
     }
 }

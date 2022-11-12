@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class UserDao {
 
@@ -53,33 +52,10 @@ public class UserDao {
             throw new DataAccessException("Username cannot be null");
         }
         User user;
-        ResultSet rs = null;
+        ResultSet rs;
         String sql = "SELECT * FROM UserTable WHERE username = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                user = new User(rs.getString("username"), rs.getString("password"), rs.getString("email"),
-                        rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"), rs.getString("personID"));
-                return user;
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccessException("Error encountered while finding user");
-        }
-    }
-
-    public User findPersonID(String personID) throws DataAccessException {
-        if (personID == null) {
-            throw new DataAccessException("personID cannot be null");
-        }
-        User user;
-        ResultSet rs = null;
-        String sql = "SELECT * FROM UserTable WHERE personID = ?;";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, personID);
             rs = stmt.executeQuery();
             if (rs.next()) {
                 user = new User(rs.getString("username"), rs.getString("password"), rs.getString("email"),

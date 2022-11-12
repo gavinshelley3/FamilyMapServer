@@ -3,7 +3,6 @@ package Service;
 import DataAccess.DataAccessException;
 import Model.Event;
 import Model.Person;
-import TreeObjects.Location;
 import TreeObjects.LocationData;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.AfterEach;
@@ -17,24 +16,19 @@ import java.io.Reader;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EventGeneratorTest {
-    private EventGenerator eventGenerator;
     private LocationData locationData;
     private int year;
     private Person person1;
     private Person person2;
     private Event event1;
-    private Event event2;
     private Event[] events;
-    private Location randomLocation;
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
 
     @BeforeEach
     void setUp() throws DataAccessException, FileNotFoundException {
         Reader reader = new FileReader("json/locations.json");
-        locationData = (LocationData)gson.fromJson(reader, LocationData.class);
-        eventGenerator = new EventGenerator();
-        randomLocation = locationData.getRandomLocation();
+        locationData = gson.fromJson(reader, LocationData.class);
         year = 2000;
         person1 = new Person("firstName1", "lastName1", "m", "personID1", "fatherID1", "motherID1", "spouseID1",
                 "associatedUsername1");
@@ -48,7 +42,7 @@ class EventGeneratorTest {
 
     @Test
     void birthPass() {
-        event1 = eventGenerator.birth(person1, year, locationData);
+        event1 = EventGenerator.birth(person1, year, locationData);
         assertEquals(event1.getEventType(), "birth");
         assertEquals(event1.getPersonID(), person1.getPersonID());
         assertEquals(event1.getAssociatedUsername(), person1.getAssociatedUsername());
@@ -57,7 +51,7 @@ class EventGeneratorTest {
 
     @Test
     void birthFail() {
-        event1 = eventGenerator.birth(person1, year, locationData);
+        event1 = EventGenerator.birth(person1, year, locationData);
         assertNotEquals(event1.getEventType(), "marriage");
         assertNotEquals(event1.getPersonID(), person2.getPersonID());
         assertNotEquals(event1.getEventID(), person2.getPersonID() + "_birth");
@@ -66,7 +60,7 @@ class EventGeneratorTest {
 
     @Test
     void marriagePass() {
-        events = eventGenerator.marriage(person1, person2, year, locationData);
+        events = EventGenerator.marriage(person1, person2, year, locationData);
         assertEquals(events[0].getEventType(), "marriage");
         assertEquals(events[1].getEventType(), "marriage");
         assertEquals(events[0].getPersonID(), person1.getPersonID());
@@ -79,8 +73,8 @@ class EventGeneratorTest {
     }
 
     @Test
-    void marriageFail(){
-        events = eventGenerator.marriage(person1, person2, year, locationData);
+    void marriageFail() {
+        events = EventGenerator.marriage(person1, person2, year, locationData);
         assertNotEquals(events[0].getEventType(), "birth");
         assertNotEquals(events[1].getEventType(), "birth");
         assertNotEquals(events[0].getPersonID(), person2.getPersonID());
@@ -92,7 +86,7 @@ class EventGeneratorTest {
 
     @Test
     void deathPass() {
-        events = eventGenerator.death(person1, person2, year, locationData);
+        events = EventGenerator.death(person1, person2, year, locationData);
         assertEquals(events[0].getEventType(), "death");
         assertEquals(events[1].getEventType(), "death");
         assertEquals(events[0].getPersonID(), person1.getPersonID());
@@ -104,8 +98,8 @@ class EventGeneratorTest {
     }
 
     @Test
-    void deathFail(){
-        events = eventGenerator.death(person1, person2, year, locationData);
+    void deathFail() {
+        events = EventGenerator.death(person1, person2, year, locationData);
         assertNotEquals(events[0].getEventType(), "birth");
         assertNotEquals(events[1].getEventType(), "birth");
         assertNotEquals(events[0].getPersonID(), person2.getPersonID());

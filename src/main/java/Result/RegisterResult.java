@@ -10,7 +10,6 @@ public class RegisterResult {
     private String personID;
     private boolean success;
     private String message;
-    private RegisterResult result;
 
     public RegisterResult() {
 

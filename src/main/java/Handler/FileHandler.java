@@ -34,7 +34,7 @@ public class FileHandler implements HttpHandler {
                 OutputStream respBody = exchange.getResponseBody();
                 Headers headers = exchange.getResponseHeaders();
                 headers.set("Content-Type", "text/html");
-                OutputStreamWriter writer = new OutputStreamWriter(respBody);
+                new OutputStreamWriter(respBody);
                 file = new File("web/HTML/404.html");
                 Files.copy(file.toPath(), respBody);
                 respBody.close();

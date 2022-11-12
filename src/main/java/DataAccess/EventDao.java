@@ -1,8 +1,6 @@
 package DataAccess;
 
 import Model.Event;
-import TreeObjects.Location;
-//import com.sun.jdi.Location;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -110,38 +108,13 @@ public class EventDao {
         }
     }
 
-    /**
-     * Checks if an event exists in the database
-     * @param eventID the eventID of the event to be checked
-     * @return true if the event exists, false otherwise
-     * @throws DataAccessException if an error occurs while accessing the database
-     */
-    public boolean eventExists(String eventID) throws DataAccessException {
-        if (eventID == null) {
-            throw new DataAccessException("EventID cannot be null");
-        }
-        String sql = "SELECT * FROM EventTable WHERE EventID = ?;";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, eventID);
-            ResultSet rs = stmt.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccessException("Error encountered while checking if an event exists in the database");
-        }
-    }
-
-    public Event getEvent(String eventID) {
-        Event event = new Event();
-        return event;
-    }
 
     public Event[] findAll(String associatedUsername) throws DataAccessException {
         if(associatedUsername == null){
             throw new DataAccessException("AssociatedUsername is null");
         }
-        Event event = null;
-        Event [] events = null;
+        Event event;
+        Event [] events;
         ArrayList<Event> eventList = new ArrayList<>();
         ResultSet rs;
         String sql = "SELECT * FROM EventTable WHERE associatedUsername = ?;";

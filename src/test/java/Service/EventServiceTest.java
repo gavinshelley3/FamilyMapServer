@@ -20,33 +20,29 @@ class EventServiceTest {
     private EventService eventService;
     private EventRequest eventRequest;
     private Database db;
-    private EventDao eventDao;
-    private AuthTokenDao aDao;
-    private AuthToken authToken;
     private String authTokenString;
     private Event event1;
-    private Event event2;
 
     @BeforeEach
     void setUp() throws DataAccessException, SQLException {
         db = new Database();
         Connection conn = db.getConnection();
-        eventDao = new EventDao(conn);
-        aDao = new AuthTokenDao(conn);
+        EventDao eventDao = new EventDao(conn);
+        AuthTokenDao authTokenDao = new AuthTokenDao(conn);
 
         eventDao.clear();
-        aDao.clear();
+        authTokenDao.clear();
 
         event1 = new Event("eventType", "personID", "city", "country", 0, 0, 0, "eventID", "username");
-        event2 = new Event("eventType", "personID", "city", "country", 0, 0, 0, "eventID2", "username");
+        Event event2 = new Event("eventType", "personID", "city", "country", 0, 0, 0, "eventID2", "username");
 
         eventDao.insert(event1);
         eventDao.insert(event2);
 
-        authToken = new AuthToken("authToken", "username");
+        AuthToken authToken = new AuthToken("authToken", "username");
         authTokenString = authToken.getAuthtoken();
 
-        aDao.insert(authToken);
+        authTokenDao.insert(authToken);
         conn.commit();
     }
 

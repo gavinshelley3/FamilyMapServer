@@ -19,10 +19,6 @@ public class RegisterService {
     //Logs the user in
     //Returns an authtoken
 
-    private String authToken;
-    private String userName;
-    private String personID;
-
     public RegisterService() {
 
     }
@@ -34,8 +30,8 @@ public class RegisterService {
             db.openConnection();
             Connection conn = db.getConnection();
             UserDao userDao = new UserDao(conn);
-            PersonDao personDao = new PersonDao(conn);
-            EventDao eventDao = new EventDao(conn);
+            new PersonDao(conn);
+            new EventDao(conn);
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             User user = new User(request.getUsername(), request.getPassword(), request.getEmail(),
                     request.getFirstName(), request.getLastName(), request.getGender(), request.generatePersonID());
@@ -43,9 +39,6 @@ public class RegisterService {
                 userDao.insert(user);
                 result.setSuccess(true);
                 result.generateAuthtoken();
-//                Person person = new Person(request.getFirstName(), request.getLastName(), request.getGender(),
-//                        request.generatePersonID(), null, null, null, request.getUsername());
-//                personDao.insert(person);
                 AuthToken authToken = new AuthToken(result.generateAuthtoken(), user.getUsername());
                 authTokenDao.insert(authToken);
                 result.setAuthtoken(authToken.getAuthtoken());
@@ -58,14 +51,6 @@ public class RegisterService {
                 FamilyTreeGenerator familyTreeGenerator = new FamilyTreeGenerator();
                 familyTreeGenerator.generateFamilyTree(request.getUsername(),request.getGender(), generations, user,
                         conn);
-//                try {
-//                    Person person = new Person(request.getFirstName(), request.getLastName(), request.getGender(),
-//                        request.generatePersonID(), null, null, null, request.getUsername());
-//                personDao.insert(person);
-//                }
-//                catch (DataAccessException e) {
-//                    e.printStackTrace();
-//                }
                 db.closeConnection(true);
             } else {
                 db.closeConnection(false);

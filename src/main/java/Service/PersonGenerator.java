@@ -5,6 +5,8 @@ import TreeObjects.fnames;
 import TreeObjects.mnames;
 import TreeObjects.snames;
 
+import java.util.Objects;
+
 public class PersonGenerator {
 
     public PersonGenerator() {
@@ -14,7 +16,7 @@ public class PersonGenerator {
     public static Person person(String username, String gender, snames surnames, fnames femaleNames,
                                 mnames maleNames) {
         gender = gender.toLowerCase();
-        if (gender == "m" || gender == "f") {
+        if (gender.equals("m") || gender.equals("f")) {
             Person person = new Person();
             person.setGender(gender);
 
@@ -40,7 +42,7 @@ public class PersonGenerator {
         if (gender != null) {
             gender = gender.toLowerCase();
         }
-        if (gender == "m" || gender == "f") {
+        if (Objects.equals(gender, "m") || Objects.equals(gender, "f")) {
             Person person = new Person();
             person.setGender(gender);
 

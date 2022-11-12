@@ -18,9 +18,6 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClearServiceTest {
-    private Person[] persons;
-    private Event[] events;
-    private User[] users;
     private Database db;
 
 
@@ -47,9 +44,9 @@ class ClearServiceTest {
         Event event = new Event("eventType", "personID", "city", "country", 0, 0, 0, "eventID", "associatedUsername");
 
 
-        persons = new Person[1];
-        events = new Event[1];
-        users = new User[1];
+        Person[] persons = new Person[1];
+        Event[] events = new Event[1];
+        User[] users = new User[1];
 
         persons[0] = person;
         events[0] = event;

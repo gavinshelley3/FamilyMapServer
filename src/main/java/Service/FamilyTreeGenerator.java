@@ -11,14 +11,11 @@ import TreeObjects.fnames;
 import TreeObjects.mnames;
 import TreeObjects.snames;
 import com.google.gson.Gson;
-import java.util.Random;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
 import java.sql.Connection;
-
-import static Service.PersonGenerator.person;
 
 
 public class FamilyTreeGenerator {
@@ -37,16 +34,16 @@ public class FamilyTreeGenerator {
     public void generateData() {
         try {
             Reader reader = new FileReader("json/locations.json");
-            locationData = (LocationData)gson.fromJson(reader, LocationData.class);
+            locationData = gson.fromJson(reader, LocationData.class);
 
             Reader readerSurnames = new FileReader("json/snames.json");
-            surNames = (snames)gson.fromJson(readerSurnames, snames.class);
+            surNames = gson.fromJson(readerSurnames, snames.class);
 
             Reader readerFemaleNames = new FileReader("json/fnames.json");
-            femaleNames = (fnames)gson.fromJson(readerFemaleNames, fnames.class);
+            femaleNames = gson.fromJson(readerFemaleNames, fnames.class);
 
             Reader readerMaleNames = new FileReader("json/mnames.json");
-            maleNames = (mnames)gson.fromJson(readerMaleNames, mnames.class);
+            maleNames = gson.fromJson(readerMaleNames, mnames.class);
 
             System.out.println("Files found");
         } catch (FileNotFoundException e) {
@@ -55,20 +52,19 @@ public class FamilyTreeGenerator {
         }
     }
 
-    Person generatePerson(String gender, int generations) {
+    public Person generatePerson(String gender, int generations) {
         Person mother = null;
         Person father = null;
         if (generations > 1) {
             mother = generatePerson("f", generations - 1);
             father = generatePerson("m", generations - 1);
         }
-        Person person= new Person();
-        return person;
+        return new Person();
     }
 
     public void generateFamilyTree(String username, String gender, int generations, User user, Connection conn) throws FileNotFoundException {
         System.out.println("Generating family tree...");
-        if (generations > 0 || gender == "f" || gender == "m") {
+        if (generations > 0 || gender.equals("f") || gender.equals("m")) {
             try {
                 generateData();
                 int birthYear = 1999;
@@ -110,8 +106,7 @@ public class FamilyTreeGenerator {
                 mom.setSpouseID(dad.getPersonID());
                 dad.setSpouseID(mom.getPersonID());
 
-                EventGenerator eventGenerator = new EventGenerator();
-                Event[] weddings = eventGenerator.marriage(mom, dad, marriageYear, locationData);
+                Event[] weddings = EventGenerator.marriage(mom, dad, marriageYear, locationData);
                 eventCount += 2;
 
                 personDao.insertSpouseID(mom.getSpouseID(), mom.getPersonID());
@@ -170,7 +165,6 @@ public class FamilyTreeGenerator {
     public int generateRandom() {
         int min = 22;
         int max = 25;
-        int rand = (int)Math.floor(Math.random()*(max-min+1)+min);
-        return rand;
+        return (int)Math.floor(Math.random()*(max-min+1)+min);
     }
 }

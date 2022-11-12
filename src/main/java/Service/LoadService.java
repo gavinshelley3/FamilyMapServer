@@ -7,8 +7,6 @@ import Model.User;
 import Request.LoadRequest;
 import Result.LoadResult;
 
-import java.sql.Connection;
-
 public class LoadService {
     //Clears all data from the database (just like the /clear API)
     //Loads the user, person, and event data from the request body into the database.
@@ -17,7 +15,7 @@ public class LoadService {
 
     }
 
-    public LoadResult load(LoadRequest request) {
+    public LoadResult load(LoadRequest request) throws DataAccessException {
         LoadResult result = new LoadResult();
         Database db = new Database();
         try {

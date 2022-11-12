@@ -12,15 +12,7 @@ import java.sql.Connection;
 
 public class PersonService {
     //Returns the single Person object with the specified ID (if the person is associated with the current user). The current user is determined by the provided authtoken.
-    /**
-     * Gets the single Person object with the specified ID
-     * @param authToken
-     * @return person
-     */
 
-    private String personID;
-    private String authtoken;
-    private Person person;
     public PersonService() {
 
     }
@@ -32,9 +24,6 @@ public class PersonService {
             Connection conn = db.getConnection();
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             PersonDao personDao = new PersonDao(conn);
-            AuthToken foundAuthToken = authTokenDao.find(request.getPersonID());
-
-
 
             if( authTokenDao.find(request.getAuthtoken()) != null){
                 Person person = personDao.find(request.getPersonID());

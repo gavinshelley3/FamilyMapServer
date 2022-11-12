@@ -22,12 +22,12 @@ public class LoginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            if (exchange.getRequestMethod().toLowerCase().equals("post")) {
+            if (exchange.getRequestMethod().equalsIgnoreCase("post")) {
                 InputStream reqBody = exchange.getRequestBody();
                 String reqData = readString(reqBody);
                 System.out.println(reqData);
 
-                LoginRequest request = (LoginRequest) gson.fromJson(reqData, LoginRequest.class);
+                LoginRequest request = gson.fromJson(reqData, LoginRequest.class);
                 LoginService service = new LoginService();
                 LoginResult result = service.login(request);
 

@@ -13,18 +13,9 @@ public class LoginService {
     //Logs the user in
     //Returns an authtoken
 
-    /**
-     * Logs in a user
-     * @param request
-     * @return authToken
-     */
     // Check if username and password match
     // If so, create new auth token
     // Return success
-
-    private String authtoken;
-    private String message;
-    private Boolean success;
 
     public LoginService() {
 

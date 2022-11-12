@@ -42,7 +42,7 @@ public class AuthTokenDao {
             throw new DataAccessException("authtoken cannot be null");
         }
         AuthToken authToken;
-        ResultSet rs = null;
+        ResultSet rs;
         String sql = "SELECT * FROM AuthTokenTable WHERE authtoken = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, authtoken);

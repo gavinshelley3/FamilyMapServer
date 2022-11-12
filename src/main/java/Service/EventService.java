@@ -6,16 +6,12 @@ import DataAccess.Database;
 import DataAccess.EventDao;
 import Model.AuthToken;
 import Model.Event;
-import Model.Person;
 import Request.EventRequest;
 import Result.EventResult;
-import TreeObjects.Location;
 
 import java.sql.Connection;
 
 public class EventService {
-    private String eventID;
-    private String authtoken;
     public EventService() {
 
     }
@@ -26,7 +22,6 @@ public class EventService {
     /**
      * Gets all events for all family members of the current user. The current user is
      * determined from the provided auth token.
-     * @param eventRequest
      * @return eventResult
      */
 
@@ -84,21 +79,17 @@ public class EventService {
                         eventResult.setYear(event.getYear());
 
                         db.closeConnection(true);
-                        return eventResult;
                     }
                     else {
-                        db.closeConnection(false);
                         eventResult.setSuccess(false);
                         eventResult.setMessage("Error: Event does not belong to this user");
-                        return eventResult;
-
+                        db.closeConnection(false);
                     }
                 }
                 else {
                     db.closeConnection(false);
                     eventResult.setMessage("Error: Event not found");
                     eventResult.setSuccess(false);
-                    return eventResult;
 
                 }
             }
@@ -106,8 +97,8 @@ public class EventService {
                 db.closeConnection(false);
                 eventResult.setSuccess(false);
                 eventResult.setMessage("Error: Event does not exist");
-                return eventResult;
             }
+            return eventResult;
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -8,13 +8,6 @@ public class Location {
 
     public Location() {}
 
-    public Location(String country, String city, float latitude, float longitude) {
-        this.country = country;
-        this.city = city;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
     public String getCountry() {
         return country;
     }
@@ -35,16 +28,8 @@ public class Location {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
     public float getLongitude() {
         return longitude;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
     }
 
     public String toString() {

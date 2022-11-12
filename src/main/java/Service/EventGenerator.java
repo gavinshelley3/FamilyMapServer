@@ -15,10 +15,9 @@ public class EventGenerator {
             personID = person.getPersonID();
             associatedUsername = person.getAssociatedUsername();
         }
-        Event birthEvent = new Event("birth", personID, randomLocation.getCity(),
+        return new Event("birth", personID, randomLocation.getCity(),
                 randomLocation.getCountry(), randomLocation.getLatitude(), randomLocation.getLongitude(), year,
                 personID + "_birth", associatedUsername);
-        return birthEvent;
     }
 
     public static Event[] marriage(Person mom, Person dad, int marriageYear, LocationData locationData) {
@@ -30,8 +29,7 @@ public class EventGenerator {
         Event dadMarriageEvent = new Event("marriage", dad.getPersonID(), randomLocationDad.getCity(),
                 randomLocationDad.getCountry(), randomLocationDad.getLatitude(), randomLocationDad.getLongitude(),
                 marriageYear, dad.getPersonID() + "_marriage", dad.getAssociatedUsername());
-        Event[] marriageEvents = {momMarriageEvent, dadMarriageEvent};
-        return marriageEvents;
+        return new Event[]{momMarriageEvent, dadMarriageEvent};
     }
 
     public static Event[] death(Person child, Person parent, int year, LocationData locationData) {
@@ -43,8 +41,7 @@ public class EventGenerator {
         Event parentDeathEvent = new Event("death", parent.getPersonID(), randomLocationParent.getCity(),
                 randomLocationParent.getCountry(), randomLocationParent.getLatitude(), randomLocationParent.getLongitude(),
                 year, parent.getPersonID() + "_death", parent.getAssociatedUsername());
-        Event[] deathEvents = {childDeathEvent, parentDeathEvent};
-        return deathEvents;
+        return new Event[]{childDeathEvent, parentDeathEvent};
     }
 
 

@@ -2,8 +2,6 @@ package Result;
 
 import Model.Person;
 
-import java.lang.reflect.Array;
-
 public class PersonResult {
 
     private Person[] data;

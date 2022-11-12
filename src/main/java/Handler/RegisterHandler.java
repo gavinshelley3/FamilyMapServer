@@ -20,12 +20,12 @@ public class RegisterHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            if (exchange.getRequestMethod().toLowerCase().equals("post")) {
+            if (exchange.getRequestMethod().equalsIgnoreCase("post")) {
                 InputStream reqBody = exchange.getRequestBody();
                 String reqData = readString(reqBody);
                 System.out.println(reqData);
 
-                RegisterRequest request = (RegisterRequest) gson.fromJson(reqData, RegisterRequest.class);
+                RegisterRequest request = gson.fromJson(reqData, RegisterRequest.class);
                 RegisterService service = new RegisterService();
                 RegisterResult result = service.register(request);
 

@@ -19,7 +19,7 @@ public class PersonHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String authToken = null;
         try {
-            if (exchange.getRequestMethod().toLowerCase().equals("get")) {
+            if (exchange.getRequestMethod().equalsIgnoreCase("get")) {
                 if (exchange.getRequestHeaders().containsKey("Authorization")) {
                     authToken = exchange.getRequestHeaders().getFirst("Authorization");
                 }

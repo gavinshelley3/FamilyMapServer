@@ -8,11 +8,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
-import static Handler.StringHandler.readString;
 import static Handler.StringHandler.writeString;
 
 public class FillHandler implements HttpHandler {
@@ -22,7 +20,7 @@ public class FillHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            if (exchange.getRequestMethod().toLowerCase().equals("post")) {
+            if (exchange.getRequestMethod().equalsIgnoreCase("post")) {
                 if (exchange.getRequestURI().toString().contains("/fill/")) {
                     String url = exchange.getRequestURI().toString();
                     String[] urlArray = url.split("/");
