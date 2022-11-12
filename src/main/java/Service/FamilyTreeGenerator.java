@@ -88,7 +88,7 @@ public class FamilyTreeGenerator {
         }
     }
 
-    private Person generatePeople(User user, String username, String gender, int generations, int birthYear,
+    public Person generatePeople(User user, String username, String gender, int generations, int birthYear,
                                   int marriageYear, int deathYear, Connection conn) throws DataAccessException {
         try {
             PersonDao personDao = new PersonDao(conn);
@@ -159,17 +159,17 @@ public class FamilyTreeGenerator {
         }
     }
 
-    public String getPeopleCount() {
-        return "";
+    public int getPeopleCount() {
+        return peopleCount;
     }
 
-    public String getEventCount() {
-        return "";
+    public int getEventCount() {
+        return eventCount;
     }
 
     public int generateRandom() {
-        int min = 18;
-        int max = 35;
+        int min = 22;
+        int max = 25;
         int rand = (int)Math.floor(Math.random()*(max-min+1)+min);
         return rand;
     }

@@ -68,7 +68,7 @@ public class EventService {
             EventDao eventDao = new EventDao(conn);
             EventResult eventResult = new EventResult();
             if (authTokenDao.find(eventRequest.getAuthtoken()) != null) {
-                Event event = eventDao.getEvent(eventRequest.getEventID());
+                Event event = eventDao.find(eventRequest.getEventID());
                 if (event != null) {
                     AuthToken authToken = authTokenDao.find(eventRequest.getAuthtoken());
                     if (event.getAssociatedUsername().equals(authToken.getUsername())) {
@@ -82,26 +82,32 @@ public class EventService {
                         eventResult.setLongitude(event.getLongitude());
                         eventResult.setPersonID(event.getPersonID());
                         eventResult.setYear(event.getYear());
+
+                        db.closeConnection(true);
+                        return eventResult;
                     }
                     else {
                         db.closeConnection(false);
                         eventResult.setSuccess(false);
                         eventResult.setMessage("Error: Event does not belong to this user");
+                        return eventResult;
+
                     }
                 }
                 else {
                     db.closeConnection(false);
                     eventResult.setMessage("Error: Event not found");
                     eventResult.setSuccess(false);
+                    return eventResult;
+
                 }
             }
             else {
                 db.closeConnection(false);
                 eventResult.setSuccess(false);
                 eventResult.setMessage("Error: Event does not exist");
+                return eventResult;
             }
-            db.closeConnection(true);
-            return eventResult;
         }
         catch (Exception e) {
             e.printStackTrace();

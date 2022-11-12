@@ -144,7 +144,7 @@ public class EventDao {
         Event [] events = null;
         ArrayList<Event> eventList = new ArrayList<>();
         ResultSet rs;
-        String sql = "SELECT * FROM Event WHERE associatedUsername = ?;";
+        String sql = "SELECT * FROM EventTable WHERE associatedUsername = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, associatedUsername);
             rs = stmt.executeQuery();

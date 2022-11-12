@@ -30,14 +30,14 @@ public class PersonResult {
     }
 
     public PersonResult(Person person, String message, boolean success){
+        this.associatedUsername = person.getAssociatedUsername();
+        this.personID = person.getPersonID();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
         this.gender = person.getGender();
-        this.personID = person.getPersonID();
         this.fatherID = person.getFatherID();
         this.motherID = person.getMotherID();
         this.spouseID = person.getSpouseID();
-        this.associatedUsername = person.getAssociatedUsername();
         this.message = message;
         this.success = success;
     }

@@ -37,7 +37,9 @@ public class PersonGenerator {
 
     public static Person person(String username, Person mom, Person dad, String gender, snames surnames,
                                 fnames femaleNames, mnames maleNames) {
-        gender = gender.toLowerCase();
+        if (gender != null) {
+            gender = gender.toLowerCase();
+        }
         if (gender == "m" || gender == "f") {
             Person person = new Person();
             person.setGender(gender);

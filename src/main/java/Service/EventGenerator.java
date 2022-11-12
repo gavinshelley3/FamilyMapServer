@@ -9,9 +9,15 @@ public class EventGenerator {
 
     public static Event birth(Person person, int year, LocationData locationData) {
         Location randomLocation = locationData.getRandomLocation();
-        Event birthEvent = new Event("birth", person.getPersonID(), randomLocation.getCity(),
+        String personID = "";
+        String associatedUsername = "";
+        if (person != null) {
+            personID = person.getPersonID();
+            associatedUsername = person.getAssociatedUsername();
+        }
+        Event birthEvent = new Event("birth", personID, randomLocation.getCity(),
                 randomLocation.getCountry(), randomLocation.getLatitude(), randomLocation.getLongitude(), year,
-                person.getPersonID() + "_birth", person.getAssociatedUsername());
+                personID + "_birth", associatedUsername);
         return birthEvent;
     }
 

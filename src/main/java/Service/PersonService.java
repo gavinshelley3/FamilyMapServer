@@ -32,13 +32,18 @@ public class PersonService {
             Connection conn = db.getConnection();
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             PersonDao personDao = new PersonDao(conn);
-            if(authTokenDao.find(request.getAuthtoken()) != null){
+            AuthToken foundAuthToken = authTokenDao.find(request.getPersonID());
+
+
+
+            if( authTokenDao.find(request.getAuthtoken()) != null){
                 Person person = personDao.find(request.getPersonID());
                 AuthToken authToken = authTokenDao.find(request.getAuthtoken());
                 if(person != null) {
                     PersonResult result;
                     if (person.getAssociatedUsername().equals(authToken.getUsername())) {
                         result = new PersonResult(person, "Successfully found person", true);
+                        db.closeConnection(true);
                     }
                     else {
                         result = new PersonResult("Error: Person does not belong to user", false);

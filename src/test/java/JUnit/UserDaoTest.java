@@ -45,7 +45,8 @@ class UserDaoTest {
     }
     @Test
     void insertFail() throws Exception {
-        assertThrows(Exception.class, () ->userDao.insert(user));
+        userDao.insert(user);
+        assertThrows(DataAccessException.class, ()-> userDao.insert(user));
     }
 
     @Test

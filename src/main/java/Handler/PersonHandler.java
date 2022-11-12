@@ -30,7 +30,7 @@ public class PersonHandler implements HttpHandler {
                     String personID = urlArray[2];
 
 
-                    PersonRequest request = new PersonRequest(authToken, personID);
+                    PersonRequest request = new PersonRequest(personID, authToken);
                     PersonService service = new PersonService();
                     PersonResult result = service.getPerson(request);
 
@@ -45,7 +45,7 @@ public class PersonHandler implements HttpHandler {
                     respBody.close();
                 }
                 else {
-                    PersonRequest request = new PersonRequest(authToken, null);
+                    PersonRequest request = new PersonRequest(null, authToken);
                     PersonService service = new PersonService();
                     PersonResult result = service.getPersons(request);
 

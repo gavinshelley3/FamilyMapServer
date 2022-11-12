@@ -5,6 +5,7 @@ import Model.User;
 import Request.FillRequest;
 import Result.FillResult;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -39,18 +40,25 @@ public class FillService {
             FamilyTreeGenerator familyTreeGenerator = new FamilyTreeGenerator();
             familyTreeGenerator.generateFamilyTree(request.getUsername(), user.getGender(), generations, user, conn);
 
-            db.closeConnection(true);
             FillResult result = new FillResult();
             result.setMessage("Successfully added " + familyTreeGenerator.getPeopleCount() + " persons and " + familyTreeGenerator.getEventCount() + " events to the database.");
             result.setSuccess(true);
+            db.closeConnection(true);
             return result;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        } catch (DataAccessException e) {
             db.closeConnection(false);
-            FillResult result = new FillResult("Error: " + e.getMessage(), false);
-            return result;
+            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//            db.closeConnection(false);
+//            FillResult result = new FillResult("Error: " + e.getMessage(), false);
+            return result;
+//        }
     }
 
     public FillResult fillGenerations(FillRequest request) throws DataAccessException {
