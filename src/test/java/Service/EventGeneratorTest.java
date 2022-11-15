@@ -33,7 +33,8 @@ class EventGeneratorTest {
         person1 = new Person("firstName1", "lastName1", "m", "personID1", "fatherID1", "motherID1", "spouseID1",
                 "associatedUsername1");
         person2 = new Person("firstName2", "lastName2", "m", "personID2", "fatherID2", "motherID2", "spouseID2",
-                "associatedUsername2");    }
+                "associatedUsername2");
+    }
 
     @AfterEach
     void tearDown() {

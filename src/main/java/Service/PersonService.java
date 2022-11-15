@@ -25,10 +25,10 @@ public class PersonService {
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             PersonDao personDao = new PersonDao(conn);
 
-            if( authTokenDao.find(request.getAuthtoken()) != null){
+            if (authTokenDao.find(request.getAuthtoken()) != null){
                 Person person = personDao.find(request.getPersonID());
                 AuthToken authToken = authTokenDao.find(request.getAuthtoken());
-                if(person != null) {
+                if (person != null) {
                     PersonResult result;
                     if (person.getAssociatedUsername().equals(authToken.getUsername())) {
                         result = new PersonResult(person, "Successfully found person", true);
@@ -47,7 +47,7 @@ public class PersonService {
                 }
             }
             else {
-                PersonResult result = new PersonResult("Error: Invalid auth token", false);
+                PersonResult result = new PersonResult("Error: Invalid authtoken", false);
                 db.closeConnection(false);
                 return result;
             }
@@ -73,7 +73,7 @@ public class PersonService {
                 db.closeConnection(true);
                 return result;
             } else{
-                PersonResult result = new PersonResult("Error: Invalid auth token", false);
+                PersonResult result = new PersonResult("Error: Invalid authtoken", false);
                 db.closeConnection(true);
                 return result;
             }

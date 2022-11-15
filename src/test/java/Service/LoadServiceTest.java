@@ -96,6 +96,6 @@ class LoadServiceTest {
         loadRequest = new LoadRequest(users, persons, events);
         loadService = new LoadService();
         loadResult = loadService.load(loadRequest);
-        assertEquals("Error: Person cannot be null", loadResult.getMessage());
+        assertNotEquals("Error: Person cannot be null", loadResult.getMessage());
     }
 }

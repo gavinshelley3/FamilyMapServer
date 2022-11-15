@@ -25,13 +25,19 @@ public class LoadService {
             EventDao eventDao = new EventDao(db.getConnection());
             clear();
             for (User user : request.getUsers()) {
-                userDao.insert(user);
+                if (user != null) {
+                    userDao.insert(user);
+                }
             }
             for (Person person : request.getPersons()) {
-                personDao.insert(person);
+                if (person != null) {
+                    personDao.insert(person);
+                }
             }
             for (Event event : request.getEvents()) {
-                eventDao.insert(event);
+                if (event != null) {
+                    eventDao.insert(event);
+                }
             }
             db.closeConnection(true);
             result.setMessage("Successfully added " + request.getUsers().length + " users, " + request.getPersons().length + " persons, and " + request.getEvents().length + " events to the database.");

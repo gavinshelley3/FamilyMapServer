@@ -15,7 +15,11 @@ public class PersonGenerator {
 
     public static Person person(String username, String gender, snames surnames, fnames femaleNames,
                                 mnames maleNames) {
-        gender = gender.toLowerCase();
+        if (gender != null) {
+            gender = gender.toLowerCase();
+        } else {
+            gender = "";
+        }
         if (gender.equals("m") || gender.equals("f")) {
             Person person = new Person();
             person.setGender(gender);
@@ -31,8 +35,14 @@ public class PersonGenerator {
             person.setPersonID(person.getFirstName() + "_" + person.getLastName());
 
             return person;
-        }
-        else {
+        } else if (username != null && surnames != null && femaleNames != null && maleNames != null) {
+            Person person = new Person();
+            person.setGender(gender);
+            person.setAssociatedUsername(username);
+            person.setLastName(surnames.getRandomSname());
+            person.setPersonID(person.getFirstName() + "_" + person.getLastName());
+            return person;
+        } else {
             return null;
         }
     }
