@@ -17,7 +17,9 @@ import static Handler.StringHandler.writeString;
 
 public class LoginHandler implements HttpHandler {
     Gson gson = new Gson();
-    public LoginHandler() {}
+
+    public LoginHandler() {
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -42,8 +44,7 @@ public class LoginHandler implements HttpHandler {
                 writeString(respData, respBody);
                 respBody.close();
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             exchange.sendResponseHeaders((HttpURLConnection.HTTP_SERVER_ERROR), 0);
             exchange.getResponseBody().close();
             System.out.println("Error: " + e.getMessage());

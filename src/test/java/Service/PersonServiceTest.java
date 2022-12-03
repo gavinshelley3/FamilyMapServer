@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class PersonServiceTest {
     private Database db;
     private Person person1;
@@ -32,10 +34,8 @@ class PersonServiceTest {
         personDao.clear();
         authTokenDao.clear();
         AuthToken authToken = new AuthToken("authtoken", "username");
-        person1 = new Person("firstName1", "lastName1", "m", "personID1", "fatherID1", "motherID1", "spouseID1",
-                "username");
-        Person person2 = new Person("firstName2", "lastName2", "m", "personID2", "fatherID2", "motherID2", "spouseID2",
-                "username");
+        person1 = new Person("firstName1", "lastName1", "m", "personID1", "fatherID1", "motherID1", "spouseID1", "username");
+        Person person2 = new Person("firstName2", "lastName2", "m", "personID2", "fatherID2", "motherID2", "spouseID2", "username");
         personDao.insert(person1);
         personDao.insert(person2);
         authTokenDao.insert(authToken);

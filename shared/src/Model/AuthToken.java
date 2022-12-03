@@ -4,7 +4,9 @@ public class AuthToken {
     private String authtoken;
     private String username;
 
-    public AuthToken() {}
+    public AuthToken() {
+    }
+
     public AuthToken(String authtoken, String username) {
         this.authtoken = authtoken;
         this.username = username;

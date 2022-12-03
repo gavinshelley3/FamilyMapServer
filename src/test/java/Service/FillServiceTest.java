@@ -40,8 +40,7 @@ class FillServiceTest {
         eventDao.clear();
         authTokenDao.clear();
         User user = new User("username", "password", "email", "firstName", "lastName", "m", "personID");
-        Person person1 = new Person("firstName1", "lastName1", "m", "username", "fatherID1", "motherID1", "spouseID1",
-                "username");
+        Person person1 = new Person("firstName1", "lastName1", "m", "username", "fatherID1", "motherID1", "spouseID1", "username");
         AuthToken authToken = new AuthToken("authtoken", "username");
         userDao.insert(user);
         personDao.insert(person1);
@@ -83,7 +82,7 @@ class FillServiceTest {
         fillRequest = new FillRequest("username", 4);
         fillResult = fillService.fill(fillRequest);
         assertNotNull(userDao.find(fillRequest.getUsername()));
-        fillService.clear(fillRequest,conn);
+        fillService.clear(fillRequest, conn);
         assertNull(personDao.find("personID"));
     }
 }

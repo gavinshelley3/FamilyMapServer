@@ -15,6 +15,7 @@ public class EventResult {
     private String message;
     private boolean success;
     private Event[] data;
+
     public EventResult() {
 
     }

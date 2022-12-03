@@ -6,21 +6,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 public class AuthTokenDao {
     private final Connection conn;
+
     public AuthTokenDao(Connection conn) {
         this.conn = conn;
     }
 
     /**
      * Inserts a new authToken into the database
+     *
      * @param authtoken the authToken to be inserted
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void insert(AuthToken authtoken) throws DataAccessException {
         clear();
-        String sql = "INSERT INTO AuthTokenTable (authtoken, username) " +
-                "VALUES(?,?)";
+        String sql = "INSERT INTO AuthTokenTable (authtoken, username) " + "VALUES(?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, authtoken.getAuthtoken());
             stmt.setString(2, authtoken.getUsername());
@@ -33,6 +35,7 @@ public class AuthTokenDao {
 
     /**
      * Finds a authToken in the database
+     *
      * @param authtoken the authtoken of the authToken to be found
      * @return the authToken with the given authtoken
      * @throws DataAccessException if an error occurs while accessing the database
@@ -61,6 +64,7 @@ public class AuthTokenDao {
 
     /**
      * Deletes all authtokens from the database
+     *
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void clear() throws DataAccessException {

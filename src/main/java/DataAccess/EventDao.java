@@ -17,14 +17,14 @@ public class EventDao {
 
     /**
      * Inserts a new event into the database
+     *
      * @param event the event to be inserted
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void insert(Event event) throws DataAccessException {
         //We can structure our string to be similar to a sql command, but if we insert question
         //marks we can change them later with help from the statement
-        String sql = "INSERT INTO EventTable (eventType, personID, city, country, latitude, " +
-                "longitude, year, eventID, associatedUsername) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO EventTable (eventType, personID, city, country, latitude, " + "longitude, year, eventID, associatedUsername) VALUES(?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             //Using the statements built-in set(type) functions we can pick the question mark we want
             //to fill in and give it a proper value. The first argument corresponds to the first
@@ -48,6 +48,7 @@ public class EventDao {
 
     /**
      * Finds an event in the database
+     *
      * @param eventID the eventID of the event to be found
      * @return the event with the given eventID
      * @throws DataAccessException if an error occurs while accessing the database
@@ -63,10 +64,7 @@ public class EventDao {
             stmt.setString(1, eventID);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                event = new Event(rs.getString("eventType"), rs.getString("personID"),
-                        rs.getString("city"), rs.getString("country"), rs.getFloat("latitude"),
-                        rs.getFloat("longitude"), rs.getInt("year"), rs.getString("eventID"),
-                        rs.getString("associatedUsername"));
+                event = new Event(rs.getString("eventType"), rs.getString("personID"), rs.getString("city"), rs.getString("country"), rs.getFloat("latitude"), rs.getFloat("longitude"), rs.getInt("year"), rs.getString("eventID"), rs.getString("associatedUsername"));
                 return event;
             } else {
                 return null;
@@ -80,6 +78,7 @@ public class EventDao {
 
     /**
      * Deletes all events from the database
+     *
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void clear() throws DataAccessException {
@@ -94,6 +93,7 @@ public class EventDao {
 
     /**
      * Deletes all events associated with a given username
+     *
      * @param username the username of the events to be deleted
      * @throws DataAccessException if an error occurs while accessing the database
      */
@@ -110,11 +110,11 @@ public class EventDao {
 
 
     public Event[] findAll(String associatedUsername) throws DataAccessException {
-        if(associatedUsername == null){
+        if (associatedUsername == null) {
             throw new DataAccessException("AssociatedUsername is null");
         }
         Event event;
-        Event [] events;
+        Event[] events;
         ArrayList<Event> eventList = new ArrayList<>();
         ResultSet rs;
         String sql = "SELECT * FROM EventTable WHERE associatedUsername = ?;";
@@ -122,10 +122,7 @@ public class EventDao {
             stmt.setString(1, associatedUsername);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                event = new Event(rs.getString("eventType"), rs.getString("personID"),
-                        rs.getString("city"), rs.getString("country"), rs.getFloat("latitude"),
-                        rs.getFloat("longitude"), rs.getInt("year"), rs.getString("eventID"),
-                        rs.getString("associatedUsername"));
+                event = new Event(rs.getString("eventType"), rs.getString("personID"), rs.getString("city"), rs.getString("country"), rs.getFloat("latitude"), rs.getFloat("longitude"), rs.getInt("year"), rs.getString("eventID"), rs.getString("associatedUsername"));
                 eventList.add(event);
             }
         } catch (SQLException e) {

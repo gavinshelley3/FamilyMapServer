@@ -4,7 +4,9 @@ import DataAccess.DataAccessException;
 import DataAccess.Database;
 import DataAccess.UserDao;
 import Model.User;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,10 +45,11 @@ class UserDaoTest {
             fail(e.getMessage());
         }
     }
+
     @Test
     void insertFail() throws Exception {
         userDao.insert(user);
-        assertThrows(DataAccessException.class, ()-> userDao.insert(user));
+        assertThrows(DataAccessException.class, () -> userDao.insert(user));
     }
 
     @Test
@@ -66,6 +69,7 @@ class UserDaoTest {
             fail(e.getMessage());
         }
     }
+
     @Test
     void findFail() throws Exception {
         assertNotEquals(user, userDao.find("notARealUsername"));

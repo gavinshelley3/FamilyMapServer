@@ -13,7 +13,8 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FamilyTreeGeneratorTest {
     private FamilyTreeGenerator familyTreeGenerator;
@@ -69,7 +70,7 @@ class FamilyTreeGeneratorTest {
     }
 
     @Test
-    void generateFamilyTreeFail() throws FileNotFoundException{
+    void generateFamilyTreeFail() throws FileNotFoundException {
         familyTreeGenerator.generateFamilyTree(user.getUsername(), "4", -10, user, connection);
         assertEquals(0, familyTreeGenerator.getPeopleCount());
         assertEquals(0, familyTreeGenerator.getEventCount());
@@ -78,8 +79,7 @@ class FamilyTreeGeneratorTest {
     @Test
     void generatePeoplePass() throws DataAccessException {
         familyTreeGenerator.generateData();
-        familyTreeGenerator.generatePeople(user, user.getUsername(), gender, generations, birthYear, marriageYear,
-                deathYear, connection);
+        familyTreeGenerator.generatePeople(user, user.getUsername(), gender, generations, birthYear, marriageYear, deathYear, connection);
         assertNotNull(familyTreeGenerator);
         assertNotNull(personDao);
         assertNotNull(eventDao);

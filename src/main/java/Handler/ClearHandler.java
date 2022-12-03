@@ -13,9 +13,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
 public class ClearHandler implements HttpHandler {
-    public ClearHandler() {}
     private final Gson gson = new Gson();
 
+    public ClearHandler() {
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -39,8 +40,7 @@ public class ClearHandler implements HttpHandler {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 exchange.getResponseBody().close();
             }
-        }
-        catch (IOException | DataAccessException e) {
+        } catch (IOException | DataAccessException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();
             System.out.println("Error");

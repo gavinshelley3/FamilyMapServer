@@ -17,8 +17,7 @@ class EventDaoTest {
     @BeforeEach
     void setUp() throws Exception {
         db = new Database();
-        event = new Event("eventType", "personID", "city", "country", 0, 0, 0, "eventID",
-                "associatedUsername");
+        event = new Event("eventType", "personID", "city", "country", 0, 0, 0, "eventID", "associatedUsername");
         eventDAO = new EventDao(db.getConnection());
         eventDAO.clear();
     }

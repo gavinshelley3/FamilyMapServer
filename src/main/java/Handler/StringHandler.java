@@ -6,6 +6,7 @@ public class StringHandler {
     public StringHandler() {
 
     }
+
     public static String readString(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         InputStreamReader sr = new InputStreamReader(is);

@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 
 public class EventHandler implements HttpHandler {
     Gson gson = new Gson();
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String authtoken = null;
@@ -57,8 +58,7 @@ public class EventHandler implements HttpHandler {
                     respBody.close();
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();
             System.out.println("Error: " + e.getMessage());

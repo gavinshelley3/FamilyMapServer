@@ -12,8 +12,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
 public class PersonHandler implements HttpHandler {
-    public PersonHandler() {}
     Gson gson = new Gson();
+
+    public PersonHandler() {
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -43,8 +45,7 @@ public class PersonHandler implements HttpHandler {
                     String gsonString = gson.toJson(result);
                     StringHandler.writeString(gsonString, respBody);
                     respBody.close();
-                }
-                else {
+                } else {
                     PersonRequest request = new PersonRequest(null, authToken);
                     PersonService service = new PersonService();
                     PersonResult result = service.getPersons(request);
@@ -60,8 +61,7 @@ public class PersonHandler implements HttpHandler {
                     respBody.close();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             exchange.sendResponseHeaders((HttpURLConnection.HTTP_SERVER_ERROR), 0);
             exchange.getResponseBody().close();
             System.out.println("Error: " + e.getMessage());

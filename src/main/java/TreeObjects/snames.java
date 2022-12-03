@@ -3,7 +3,7 @@ package TreeObjects;
 public class snames {
     String[] data;
 
-    public  String[] getData() {
+    public String[] getData() {
         return data;
     }
 

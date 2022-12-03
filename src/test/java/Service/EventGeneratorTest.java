@@ -13,25 +13,25 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 class EventGeneratorTest {
+    private final Gson gson = new Gson();
     private LocationData locationData;
     private int year;
     private Person person1;
     private Person person2;
     private Event event1;
     private Event[] events;
-    private final Gson gson = new Gson();
-
 
     @BeforeEach
     void setUp() throws DataAccessException, FileNotFoundException {
         Reader reader = new FileReader("json/locations.json");
         locationData = gson.fromJson(reader, LocationData.class);
         year = 2000;
-        person1 = new Person("firstName1", "lastName1", "m", "personID1", "fatherID1", "motherID1", "spouseID1",
-                "associatedUsername1");
-        person2 = new Person("firstName2", "lastName2", "m", "personID2", "fatherID2", "motherID2", "spouseID2",
-                "associatedUsername2");
+        person1 = new Person("firstName1", "lastName1", "m", "personID1", "fatherID1", "motherID1", "spouseID1", "associatedUsername1");
+        person2 = new Person("firstName2", "lastName2", "m", "personID2", "fatherID2", "motherID2", "spouseID2", "associatedUsername2");
     }
 
     @AfterEach

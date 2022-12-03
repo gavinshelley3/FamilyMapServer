@@ -18,6 +18,7 @@ public class FillService {
     public FillService() {
 
     }
+
     public FillResult fill(FillRequest request) throws DataAccessException {
         Database db = new Database();
         int generations = 4;
@@ -31,13 +32,12 @@ public class FillService {
             FamilyTreeGenerator familyTreeGenerator = new FamilyTreeGenerator();
             familyTreeGenerator.generateFamilyTree(request.getUsername(), user.getGender(), generations, user, conn);
 
-            FillResult result = new FillResult("Successfully added " + familyTreeGenerator.getPeopleCount() + " " +
-                    "persons and " + familyTreeGenerator.getEventCount() + " events to the database.", true);
+            FillResult result = new FillResult("Successfully added " + familyTreeGenerator.getPeopleCount() + " " + "persons and " + familyTreeGenerator.getEventCount() + " events to the database.", true);
             db.closeConnection(true);
             return result;
         } catch (DataAccessException e) {
             e.printStackTrace();
-            FillResult result = new FillResult("Error: " + e.getMessage(),false);
+            FillResult result = new FillResult("Error: " + e.getMessage(), false);
             db.closeConnection(true);
             return result;
         } catch (SQLException | FileNotFoundException e) {
@@ -64,12 +64,10 @@ public class FillService {
             clear(request, conn);
             FamilyTreeGenerator familyTreeGenerator = new FamilyTreeGenerator();
             familyTreeGenerator.generateFamilyTree(request.getUsername(), user.getGender(), request.getGenerations(), user, conn);
-            FillResult result = new FillResult("Successfully added " + familyTreeGenerator.getPeopleCount() + " " +
-                    "persons and " + familyTreeGenerator.getEventCount() + " events to the database.", true);
+            FillResult result = new FillResult("Successfully added " + familyTreeGenerator.getPeopleCount() + " " + "persons and " + familyTreeGenerator.getEventCount() + " events to the database.", true);
             db.closeConnection(true);
             return result;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             FillResult result = new FillResult("Error: " + e.getMessage(), false);
             db.closeConnection(false);
@@ -78,7 +76,7 @@ public class FillService {
     }
 
     public void clear(FillRequest request, Connection conn) throws DataAccessException, SQLException {
-        try{
+        try {
             PersonDao personDao = new PersonDao(conn);
             EventDao eventDao = new EventDao(conn);
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
@@ -88,8 +86,7 @@ public class FillService {
             authTokenDao.clear();
 
             conn.commit();
-        }
-        catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             conn.rollback();
             e.printStackTrace();
         }

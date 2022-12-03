@@ -33,8 +33,7 @@ public class RegisterService {
             new PersonDao(conn);
             new EventDao(conn);
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
-            User user = new User(request.getUsername(), request.getPassword(), request.getEmail(),
-                    request.getFirstName(), request.getLastName(), request.getGender(), request.generatePersonID());
+            User user = new User(request.getUsername(), request.getPassword(), request.getEmail(), request.getFirstName(), request.getLastName(), request.getGender(), request.generatePersonID());
             if (userDao.find(request.getUsername()) == null) {
                 userDao.insert(user);
                 result.setSuccess(true);
@@ -49,16 +48,14 @@ public class RegisterService {
 
                 int generations = 4;
                 FamilyTreeGenerator familyTreeGenerator = new FamilyTreeGenerator();
-                familyTreeGenerator.generateFamilyTree(request.getUsername(),request.getGender(), generations, user,
-                        conn);
+                familyTreeGenerator.generateFamilyTree(request.getUsername(), request.getGender(), generations, user, conn);
                 db.closeConnection(true);
             } else {
                 db.closeConnection(false);
                 result.setSuccess(false);
                 result.setMessage("Error: Username already exists.");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             db.closeConnection(false);
             e.printStackTrace();
             result.setAuthtoken(null);

@@ -45,7 +45,7 @@ class PersonDaoTest {
         } catch (Exception e) {
             fail(e.getMessage());
         }
-        assertThrows(DataAccessException.class, ()->personDao.insert(person));
+        assertThrows(DataAccessException.class, () -> personDao.insert(person));
 
     }
 

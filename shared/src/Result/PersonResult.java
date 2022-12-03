@@ -17,6 +17,7 @@ public class PersonResult {
     private boolean success;
 
     private Person person;
+
     public PersonResult() {
 
     }
@@ -27,7 +28,7 @@ public class PersonResult {
         this.success = success;
     }
 
-    public PersonResult(Person person, String message, boolean success){
+    public PersonResult(Person person, String message, boolean success) {
         this.associatedUsername = person.getAssociatedUsername();
         this.personID = person.getPersonID();
         this.firstName = person.getFirstName();
@@ -45,9 +46,7 @@ public class PersonResult {
         this.success = success;
     }
 
-    public PersonResult person(String associatedUsername, String personID, String firstName, String lastName,
-                            String gender,
-                       String fatherID, String motherID, String spouseID, String message, boolean success) {
+    public PersonResult person(String associatedUsername, String personID, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID, String message, boolean success) {
         PersonResult result = new PersonResult();
         result.associatedUsername = associatedUsername;
         result.personID = personID;
@@ -154,11 +153,11 @@ public class PersonResult {
         return person;
     }
 
-    public Person getPerson(String personID) {
-        return person;
-    }
-
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Person getPerson(String personID) {
+        return person;
     }
 }

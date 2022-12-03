@@ -15,7 +15,9 @@ import java.net.HttpURLConnection;
 
 public class LoadHandler implements HttpHandler {
     private final Gson gson = new Gson();
-    public LoadHandler() {}
+
+    public LoadHandler() {
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -35,13 +37,11 @@ public class LoadHandler implements HttpHandler {
                 String json = gson.toJson(result);
                 StringHandler.writeString(json, resBody);
                 resBody.close();
-            }
-            else {
+            } else {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 exchange.getResponseBody().close();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();
             System.out.println("Error: " + e.getMessage());

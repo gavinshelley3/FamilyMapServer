@@ -28,7 +28,7 @@ public class LoginService {
         String authtokenString = uuid.toString();
         AuthToken authtoken = new AuthToken(authtokenString, request.getUsername());
 
-        try{
+        try {
             db.openConnection();
             UserDao userDao = new UserDao(db.getConnection());
             AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());

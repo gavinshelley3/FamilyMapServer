@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class LoginServiceTest {
     RegisterService registerService;
@@ -32,8 +33,7 @@ class LoginServiceTest {
     void setUp() throws DataAccessException, SQLException {
         registerService = new RegisterService();
         loginService = new LoginService();
-        registerRequest = new RegisterRequest("username", "password", "email", "firstName", "lastName", "m",
-                "personID");
+        registerRequest = new RegisterRequest("username", "password", "email", "firstName", "lastName", "m", "personID");
         loginRequest = new LoginRequest("username", "password");
         db = new Database();
         conn = db.getConnection();
@@ -59,7 +59,7 @@ class LoginServiceTest {
         loginResult = loginService.login(loginRequest);
         assertNotNull(loginResult);
         assertNotNull(loginResult.getAuthtoken());
-        assertEquals(registerResult.getPersonID(),loginResult.getPersonID());
+        assertEquals(registerResult.getPersonID(), loginResult.getPersonID());
     }
 
     @Test

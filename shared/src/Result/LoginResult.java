@@ -8,7 +8,10 @@ public class LoginResult {
     private String personID;
     private boolean success;
     private String message;
-    public LoginResult() {}
+
+    public LoginResult() {
+    }
+
     public LoginResult(String authtoken, String username, String personID, boolean success, String message) {
         this.authtoken = authtoken;
         this.username = username;

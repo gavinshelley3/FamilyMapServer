@@ -9,9 +9,11 @@ public class Person {
     private String motherID;
     private String spouseID;
     private String associatedUsername;
-    public Person() {}
-    public Person(String firstName, String lastName, String gender, String personID,
-                  String fatherID, String motherID, String spouseID, String associatedUsername) {
+
+    public Person() {
+    }
+
+    public Person(String firstName, String lastName, String gender, String personID, String fatherID, String motherID, String spouseID, String associatedUsername) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;

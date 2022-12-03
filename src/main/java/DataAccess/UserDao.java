@@ -17,6 +17,7 @@ public class UserDao {
 
     /**
      * Inserts a new user into the database
+     *
      * @param user the user to be inserted
      * @throws DataAccessException if an error occurs while accessing the database
      */
@@ -24,8 +25,7 @@ public class UserDao {
         if (user == null) {
             throw new DataAccessException("User cannot be null");
         }
-        String sql = "INSERT INTO UserTable (username, password, email, firstName, lastName, gender, personID) " +
-                "VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO UserTable (username, password, email, firstName, lastName, gender, personID) " + "VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
@@ -43,6 +43,7 @@ public class UserDao {
 
     /**
      * Finds a user in the database
+     *
      * @param username the username of the user to be found
      * @return the user with the given username
      * @throws DataAccessException if an error occurs while accessing the database
@@ -58,8 +59,7 @@ public class UserDao {
             stmt.setString(1, username);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                user = new User(rs.getString("username"), rs.getString("password"), rs.getString("email"),
-                        rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"), rs.getString("personID"));
+                user = new User(rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("gender"), rs.getString("personID"));
                 return user;
             } else {
                 return null;
@@ -72,6 +72,7 @@ public class UserDao {
 
     /**
      * Clears all users from the database
+     *
      * @throws DataAccessException if an error occurs while accessing the database
      */
     public void clear() throws DataAccessException {

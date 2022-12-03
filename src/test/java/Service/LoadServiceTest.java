@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LoadServiceTest {
+    EventDao eDao;
+    PersonDao pDao;
+    UserDao uDao;
     private LoadService loadService;
     private Database db;
     private LoadRequest loadRequest;
@@ -26,13 +29,6 @@ class LoadServiceTest {
     private Event event;
     private Person person;
     private User user;
-    EventDao eDao;
-    PersonDao pDao;
-    UserDao uDao;
-
-
-
-
 
     @BeforeEach
     void setUp() throws DataAccessException, SQLException {
@@ -78,7 +74,6 @@ class LoadServiceTest {
         assertNull(pDao.find(person.getPersonID()));
         assertNull(eDao.find(event.getEventID()));
     }
-
 
 
     @Test

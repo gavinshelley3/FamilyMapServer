@@ -30,20 +30,18 @@ class PersonGeneratorTest {
     @BeforeEach
     void setUp() throws FileNotFoundException {
         Reader readerSurnames = new FileReader("json/snames.json");
-        surnames = (snames)gson.fromJson(readerSurnames, snames.class);
+        surnames = (snames) gson.fromJson(readerSurnames, snames.class);
 
         Reader readerFemaleNames = new FileReader("json/fnames.json");
-        femaleNames = (fnames)gson.fromJson(readerFemaleNames, fnames.class);
+        femaleNames = (fnames) gson.fromJson(readerFemaleNames, fnames.class);
 
         Reader readerMaleNames = new FileReader("json/mnames.json");
-        maleNames = (mnames)gson.fromJson(readerMaleNames, mnames.class);
+        maleNames = (mnames) gson.fromJson(readerMaleNames, mnames.class);
 
         personGenerator = new PersonGenerator();
 
-        dad =  new Person("firstName", "lastName", "m", "personID_fatherID", "fatherID", "motherID", "spouseID",
-                "associatedUsername");
-        mom = new Person("firstName", "lastName", "m", "personID_motherID", "fatherID", "motherID", "spouseID",
-                "associatedUsername");
+        dad = new Person("firstName", "lastName", "m", "personID_fatherID", "fatherID", "motherID", "spouseID", "associatedUsername");
+        mom = new Person("firstName", "lastName", "m", "personID_motherID", "fatherID", "motherID", "spouseID", "associatedUsername");
         gender = "m";
         username = "username";
     }

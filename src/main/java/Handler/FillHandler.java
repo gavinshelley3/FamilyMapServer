@@ -15,7 +15,9 @@ import static Handler.StringHandler.writeString;
 
 public class FillHandler implements HttpHandler {
     Gson gson = new Gson();
-    public FillHandler() {}
+
+    public FillHandler() {
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -31,31 +33,28 @@ public class FillHandler implements HttpHandler {
                         FillService service = new FillService();
                         FillResult result = service.fillGenerations(request);
 
-                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                         OutputStream respBody = exchange.getResponseBody();
                         String gsonString = gson.toJson(result);
-                        writeString(gsonString,respBody);
+                        writeString(gsonString, respBody);
                         respBody.close();
-                    }
-                    else {
+                    } else {
                         FillRequest request = new FillRequest(username);
                         FillService service = new FillService();
                         FillResult result = service.fill(request);
 
-                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                         OutputStream respBody = exchange.getResponseBody();
                         String gsonString = gson.toJson(result);
-                        writeString(gsonString,respBody);
+                        writeString(gsonString, respBody);
                         respBody.close();
                     }
                 }
-            }
-            else {
+            } else {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 exchange.getResponseBody().close();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();
             System.out.println("Error: " + e.getMessage());

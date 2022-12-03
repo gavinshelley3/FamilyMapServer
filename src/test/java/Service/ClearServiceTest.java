@@ -15,7 +15,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ClearServiceTest {
     private Database db;
@@ -39,8 +40,7 @@ class ClearServiceTest {
         conn.commit();
 
         User user = new User("username", "password", "email", "firstName", "lastName", "m", "personID");
-        Person person = new Person("firstName", "lastName", "m", "personID", "fatherID", "motherID", "spouseID",
-                "associatedUsername");
+        Person person = new Person("firstName", "lastName", "m", "personID", "fatherID", "motherID", "spouseID", "associatedUsername");
         Event event = new Event("eventType", "personID", "city", "country", 0, 0, 0, "eventID", "associatedUsername");
 
 

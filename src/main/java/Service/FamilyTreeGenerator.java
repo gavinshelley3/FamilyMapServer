@@ -27,6 +27,7 @@ public class FamilyTreeGenerator {
     snames surNames = new snames();
     fnames femaleNames = new fnames();
     mnames maleNames = new mnames();
+
     public FamilyTreeGenerator() {
 
     }
@@ -71,21 +72,17 @@ public class FamilyTreeGenerator {
                 int marriageYear = 2024;
                 int deathYear = 2075;
                 initialGeneration = generations;
-                Person person = generatePeople(user, username, gender, generations, birthYear, marriageYear,
-                        deathYear, conn);
-            }
-            catch (Exception e) {
+                Person person = generatePeople(user, username, gender, generations, birthYear, marriageYear, deathYear, conn);
+            } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error: error generating family tree");
             }
-        }
-        else {
+        } else {
             System.out.println("Error: error generating family tree");
         }
     }
 
-    public Person generatePeople(User user, String username, String gender, int generations, int birthYear,
-                                  int marriageYear, int deathYear, Connection conn) throws DataAccessException {
+    public Person generatePeople(User user, String username, String gender, int generations, int birthYear, int marriageYear, int deathYear, Connection conn) throws DataAccessException {
         try {
             PersonDao personDao = new PersonDao(conn);
             EventDao eventDao = new EventDao(conn);
@@ -99,10 +96,8 @@ public class FamilyTreeGenerator {
                 int randDad = generateRandom();
                 int randMarriage = generateRandom();
 
-                mom = generatePeople(user, username,"f", generations - 1, birthYear - randMom,
-                        marriageYear - randMarriage, deathYear - randMom, conn);
-                dad = generatePeople(user, username,"m", generations - 1, birthYear - randDad,
-                        marriageYear - randMarriage, deathYear - randDad, conn);
+                mom = generatePeople(user, username, "f", generations - 1, birthYear - randMom, marriageYear - randMarriage, deathYear - randMom, conn);
+                dad = generatePeople(user, username, "m", generations - 1, birthYear - randDad, marriageYear - randMarriage, deathYear - randDad, conn);
                 mom.setSpouseID(dad.getPersonID());
                 dad.setSpouseID(mom.getPersonID());
 
@@ -124,13 +119,11 @@ public class FamilyTreeGenerator {
 
 
             if (dad == null || mom == null) {
-                person = PersonGenerator.person(username,gender, surNames, femaleNames, maleNames);
+                person = PersonGenerator.person(username, gender, surNames, femaleNames, maleNames);
                 peopleCount++;
-            }
-            else {
+            } else {
                 if (initialGeneration == generations) {
-                    person = new Person(user.getFirstName(), user.getLastName(), gender, user.getPersonID(),
-                            dad.getPersonID(), mom.getPersonID(), null, username);
+                    person = new Person(user.getFirstName(), user.getLastName(), gender, user.getPersonID(), dad.getPersonID(), mom.getPersonID(), null, username);
                 } else {
                     person = PersonGenerator.person(username, mom, dad, gender, surNames, femaleNames, maleNames);
                 }
@@ -147,8 +140,7 @@ public class FamilyTreeGenerator {
             conn.commit();
 
             return person;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -165,6 +157,6 @@ public class FamilyTreeGenerator {
     public int generateRandom() {
         int min = 22;
         int max = 25;
-        return (int)Math.floor(Math.random()*(max-min+1)+min);
+        return (int) Math.floor(Math.random() * (max - min + 1) + min);
     }
 }

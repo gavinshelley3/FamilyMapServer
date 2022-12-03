@@ -6,7 +6,8 @@ public class Location {
     private float latitude;
     private float longitude;
 
-    public Location() {}
+    public Location() {
+    }
 
     public String getCountry() {
         return country;

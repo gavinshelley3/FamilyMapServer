@@ -12,7 +12,8 @@ import java.net.HttpURLConnection;
 import java.nio.file.Files;
 
 public class FileHandler implements HttpHandler {
-    public FileHandler() {}
+    public FileHandler() {
+    }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
@@ -28,8 +29,7 @@ public class FileHandler implements HttpHandler {
                 OutputStream respBody = exchange.getResponseBody();
                 Files.copy(file.toPath(), respBody);
                 respBody.close();
-            }
-            else {
+            } else {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND, 0);
                 OutputStream respBody = exchange.getResponseBody();
                 Headers headers = exchange.getResponseHeaders();
@@ -39,8 +39,7 @@ public class FileHandler implements HttpHandler {
                 Files.copy(file.toPath(), respBody);
                 respBody.close();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             exchange.sendResponseHeaders((HttpURLConnection.HTTP_SERVER_ERROR), 0);
             exchange.getResponseBody().close();
             System.out.println("Error: " + e.getMessage());

@@ -19,32 +19,34 @@ public class EventService {
     // The current user is determined by the provided authtoken.
     // Returns ALL events for ALL family members of the current user.
     // The current user is determined from the provided authtoken.
+
     /**
      * Gets all events for all family members of the current user. The current user is
      * determined from the provided auth token.
+     *
      * @return eventResult
      */
 
     public EventResult getEvents(EventRequest eventRequest) {
         EventResult result = new EventResult();
         Database db = new Database();
-        try{
+        try {
             db.openConnection();
             AuthTokenDao authTokenDao = new AuthTokenDao(db.getConnection());
             EventDao eventDao = new EventDao(db.getConnection());
             String associatedUsername;
-            if(authTokenDao.find(eventRequest.getAuthtoken()) != null){
+            if (authTokenDao.find(eventRequest.getAuthtoken()) != null) {
                 associatedUsername = authTokenDao.find(eventRequest.getAuthtoken()).getUsername();
                 result.setData(eventDao.findAll(associatedUsername));
                 result.setSuccess(true);
                 result.setMessage("Successfully found events");
-            } else{
+            } else {
                 db.closeConnection(false);
                 result.setMessage("Error: Invalid auth token");
                 result.setSuccess(false);
                 return result;
             }
-        }catch(DataAccessException e){
+        } catch (DataAccessException e) {
             result.setSuccess(false);
             result.setMessage("Error: Internal server error");
             db.closeConnection(false);
@@ -79,28 +81,24 @@ public class EventService {
                         eventResult.setYear(event.getYear());
 
                         db.closeConnection(true);
-                    }
-                    else {
+                    } else {
                         eventResult.setSuccess(false);
                         eventResult.setMessage("Error: Event does not belong to this user");
                         db.closeConnection(false);
                     }
-                }
-                else {
+                } else {
                     db.closeConnection(false);
                     eventResult.setMessage("Error: Event not found");
                     eventResult.setSuccess(false);
 
                 }
-            }
-            else {
+            } else {
                 db.closeConnection(false);
                 eventResult.setSuccess(false);
                 eventResult.setMessage("Error: Event does not exist");
             }
             return eventResult;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             EventResult eventResult = new EventResult("Error: " + e.getMessage(), false);
             db.closeConnection(false);

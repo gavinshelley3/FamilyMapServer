@@ -25,7 +25,7 @@ public class PersonService {
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             PersonDao personDao = new PersonDao(conn);
 
-            if (authTokenDao.find(request.getAuthtoken()) != null){
+            if (authTokenDao.find(request.getAuthtoken()) != null) {
                 Person person = personDao.find(request.getPersonID());
                 AuthToken authToken = authTokenDao.find(request.getAuthtoken());
                 if (person != null) {
@@ -33,26 +33,22 @@ public class PersonService {
                     if (person.getAssociatedUsername().equals(authToken.getUsername())) {
                         result = new PersonResult(person, "Successfully found person", true);
                         db.closeConnection(true);
-                    }
-                    else {
+                    } else {
                         result = new PersonResult("Error: Person does not belong to user", false);
                         db.closeConnection(false);
                     }
                     return result;
-                }
-                else {
+                } else {
                     PersonResult result = new PersonResult("Error: Person not found", false);
                     db.closeConnection(false);
                     return result;
                 }
-            }
-            else {
+            } else {
                 PersonResult result = new PersonResult("Error: Invalid authtoken", false);
                 db.closeConnection(false);
                 return result;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             PersonResult result = new PersonResult("Error: Internal server error", false);
             db.closeConnection(false);
             return result;
@@ -68,17 +64,15 @@ public class PersonService {
             String associatedUsername;
             if (authTokenDao.find(request.getAuthtoken()) != null) {
                 associatedUsername = authTokenDao.find(request.getAuthtoken()).getUsername();
-                PersonResult result = new PersonResult(personDao.findAll(associatedUsername), "Successfully returned " +
-                        "all family members of the current user.", true);
+                PersonResult result = new PersonResult(personDao.findAll(associatedUsername), "Successfully returned " + "all family members of the current user.", true);
                 db.closeConnection(true);
                 return result;
-            } else{
+            } else {
                 PersonResult result = new PersonResult("Error: Invalid authtoken", false);
                 db.closeConnection(true);
                 return result;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             PersonResult result = new PersonResult("Error: " + e.getMessage(), false);
             db.closeConnection(false);

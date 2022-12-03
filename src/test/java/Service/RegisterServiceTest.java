@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class RegisterServiceTest {
     Database db;
@@ -23,8 +24,7 @@ class RegisterServiceTest {
         db = new Database();
         conn = db.getConnection();
         registerService = new RegisterService();
-        registerRequest = new RegisterRequest("username", "password", "email", "firstName", "lastName", "m",
-                "personID");
+        registerRequest = new RegisterRequest("username", "password", "email", "firstName", "lastName", "m", "personID");
         UserDao userDao = new UserDao(conn);
         PersonDao personDao = new PersonDao(conn);
         EventDao eventDao = new EventDao(conn);

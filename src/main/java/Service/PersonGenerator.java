@@ -13,8 +13,7 @@ public class PersonGenerator {
 
     }
 
-    public static Person person(String username, String gender, snames surnames, fnames femaleNames,
-                                mnames maleNames) {
+    public static Person person(String username, String gender, snames surnames, fnames femaleNames, mnames maleNames) {
         if (gender != null) {
             gender = gender.toLowerCase();
         } else {
@@ -47,8 +46,7 @@ public class PersonGenerator {
         }
     }
 
-    public static Person person(String username, Person mom, Person dad, String gender, snames surnames,
-                                fnames femaleNames, mnames maleNames) {
+    public static Person person(String username, Person mom, Person dad, String gender, snames surnames, fnames femaleNames, mnames maleNames) {
         if (gender != null) {
             gender = gender.toLowerCase();
         }
@@ -70,8 +68,7 @@ public class PersonGenerator {
             person.setPersonID(person.getFirstName() + "_" + person.getLastName());
 
             return person;
-        }
-        else {
+        } else {
             return null;
         }
     }

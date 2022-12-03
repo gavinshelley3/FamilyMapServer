@@ -10,9 +10,11 @@ public class Event {
     private int year;
     private String eventID;
     private String associatedUsername;
-    public Event() {}
-    public Event(String eventType, String personID, String city, String country, float latitude, float longitude,
-                 int year, String eventID, String associatedUsername) {
+
+    public Event() {
+    }
+
+    public Event(String eventType, String personID, String city, String country, float latitude, float longitude, int year, String eventID, String associatedUsername) {
         this.eventType = eventType;
         this.personID = personID;
         this.city = city;

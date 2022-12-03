@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class EventServiceTest {
     private EventService eventService;
     private EventRequest eventRequest;
@@ -71,7 +73,7 @@ class EventServiceTest {
     }
 
     @Test
-    void getEventsFail(){
+    void getEventsFail() {
         eventRequest = new EventRequest("authToken2", null);
         eventService = new EventService();
         assertEquals("Error: Invalid auth token", eventService.getEvents(eventRequest).getMessage());
