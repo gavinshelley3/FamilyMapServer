@@ -14,6 +14,11 @@ public class RegisterResult {
     public RegisterResult() {
 
     }
+
+    public RegisterResult(String message) {
+        this.message = message;
+    }
+
     public RegisterResult(String authtoken, String username, String personID, boolean success, String message) {
         this.authtoken = authtoken;
         this.username = username;

@@ -13,8 +13,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class EventGeneratorTest {
     private LocationData locationData;
     private int year;
